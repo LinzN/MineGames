@@ -38,11 +38,11 @@ public class Join implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg join - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.join", "Join the lobby");
+        return "/mg join - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.join", "Join the lobby");
     }
 
     public String permission() {
-        return "sg.arena.join";
+        return "mg.arena.join";
     }
 }
 

@@ -38,7 +38,7 @@ public class ListArenas implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg listarenas <lobby#> " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.listarenas", "List all available arenas");
+        return "/mg listarenas <lobby#> " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.listarenas", "List all available arenas");
     }
 
     public String permission() {

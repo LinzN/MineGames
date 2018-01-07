@@ -38,10 +38,10 @@ public class Enable implements SubCommand {
 
 
     public String help(Player p) {
-        return "/sg enable <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.enable", "Enables arena <id>");
+        return "/mg enable <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.enable", "Enables arena <id>");
     }
 
     public String permission() {
-        return "sg.arena.enable";
+        return "mg.arena.enable";
     }
 }

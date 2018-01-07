@@ -269,9 +269,6 @@ public class SettingsManager {
         flags.put("ARENA_NAME", system.getString("sg-system.arenas." + a + ".flags.arena-name"));
         flags.put("ARENA_COST", system.getInt("sg-system.arenas." + a + ".flags.arena-cost"));
         flags.put("ARENA_REWARD", system.getInt("sg-system.arenas." + a + ".flags.arena-reward"));
-        flags.put("ARENA_MAXTIME", system.getInt("sg-system.arenas." + a + ".flags.arena-maxtime"));
-        flags.put("SPONSOR_ENABLED", system.getBoolean("sg-system.arenas." + a + ".flags.sponsor-enabled"));
-        flags.put("SPONSOR_MODE", system.getInt("sg-system.arenas." + a + ".flags.sponsor-mode"));
 
         return flags;
 
@@ -292,8 +289,6 @@ public class SettingsManager {
         system.set("sg-system.arenas." + a + ".flags.arena-cost", flags.get("ARENA_COST"));
         system.set("sg-system.arenas." + a + ".flags.arena-reward", flags.get("ARENA_REWARD"));
         system.set("sg-system.arenas." + a + ".flags.arena-maxtime", flags.get("ARENA_MAXTIME"));
-        system.set("sg-system.arenas." + a + ".flags.sponsor-enabled", flags.get("SPONSOR_ENABLED"));
-        system.set("sg-system.arenas." + a + ".flags.sponsor-mode", flags.get("SPONSOR_MODE"));
 
         saveSystemConfig();
 

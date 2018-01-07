@@ -6,7 +6,87 @@ author: Niklas Linz
 depend: [WorldGuard, Vault]
 
 commands:
-  mg:
+  minegames:
     description: Plugin command
     usage: /mg <command> <args>
-    aliases: [sg, hg]
+    aliases: [mg, sg, hg]
+
+permissions:
+    mg.player.*:
+        default: true
+        description: MineGames Player Commands
+        children:
+            mg.player.play: true
+            mg.player.vote: true
+            mg.player.spectate: true
+            mg.player.joinlobby: true
+            mg.player.listarenas: true
+    mg.player.play:
+        description: Allows the user to click a sign to join a game.
+        default: true
+    mg.player.vote:
+        description: Allows the user to vote to start a game.
+        default: true
+    mg.player.spectate:
+        description:  Allows the user to spectate a game.
+        default: true
+    mg.player.joinlobby:
+        description: Allows the use of /sg join to join the lobby.
+        default: true
+    mg.player.listarenas:
+        description: List all arenas set up.
+        default: true
+    mg.player.list:
+        description: List all players in the arena you are playing in.
+        default: true
+
+    mg.staff.*:
+        default: op
+        description: MineGames Staff Commands
+        children:
+            mg.player.*: true
+            mg.staff.forcestart: true
+            mg.staff.disablearena: true
+            mg.staff.enablearena: true
+            mg.staff.nocmdblock: true
+    mg.staff.forcestart:
+        description: Allows the user to force start a game.
+        default: op
+    mg.staff.disablearena:
+        description: Allows the user to disable an arena.
+        default: op
+    mg.staff.enablearena:
+        description: Allows the user to enable an arena.
+        default: op
+    mg.staff.nocmdblock:
+        description: Allows user to bypass in-game command block.
+        default: op
+    mg.admin.*:
+        default: op
+        description: MineGames Admin Commands
+        children:
+            mg.staff.*: true
+            mg.admin.createarena: true
+            mg.admin.setarenaspawns: true
+            mg.admin.resetspawns: true
+            mg.admin.deletearena: true
+            mg.admin.setlobby: true
+            mg.admin.flag: true
+    mg.admin.createarena:
+        description: Allows the user to create an arena.
+        default: op
+    mg.admin.setarenaspawns:
+        description: Allows user to set arena spawns.
+        default: op
+    mg.admin.resetspawns:
+        description: Allows the user to reset all spawnpoints.
+        default: op
+    mg.admin.deletearena:
+        description: Allows a user to delete an arena.
+        default: op
+    mg.admin.setlobby:
+        description: Allows the user to set the lobby spawn and wall.
+        default: op
+    mg.admin.flag:
+        description: Allows the user to modify per-arena flags.
+        default: op

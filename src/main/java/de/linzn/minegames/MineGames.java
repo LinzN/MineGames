@@ -76,7 +76,6 @@ public class MineGames extends JavaPlugin {
             try {
                 g.disable();
             } catch (Exception e) {
-                // Will throw useless "tried to register task blah blah error." Use the method below to reset the arena without a task.
             }
             QueueManager.getInstance().rollback(g.getID(), true);
         }
@@ -87,13 +86,12 @@ public class MineGames extends JavaPlugin {
     public void onEnable() {
         logger = p.getLogger();
 
-        // Ensure that all worlds are loaded. Fixes some issues with Multiverse loading after this plugin had started
         getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
 
     }
 
     public void setCommands() {
-        getCommand("survivalgames").setExecutor(new CommandHandler(p));
+        getCommand("minegames").setExecutor(new CommandHandler(p));
     }
 
     public WorldEditPlugin getWorldEdit() {
@@ -116,7 +114,7 @@ public class MineGames extends JavaPlugin {
             MessageManager.getInstance().setup();
             GameManager.getInstance().setup(p);
 
-            try { // Try loading everything that uses SQL.
+            try {
                 FileConfiguration c = SettingsManager.getInstance().getConfig();
                 if (c.getBoolean("stats.enabled")) DatabaseManager.getInstance().setup(p);
                 QueueManager.getInstance().setup();
@@ -156,7 +154,7 @@ public class MineGames extends JavaPlugin {
                 }
             }
 
-            //   new Webserver().start();
+            //new Webserver().start();
         }
     }
 }

@@ -19,6 +19,6 @@ public class SetStatsWall implements SubCommand {
     }
 
     public String permission() {
-        return "sg.admin.setstatswall";
+        return "mg.admin.setstatswall";
     }
 }

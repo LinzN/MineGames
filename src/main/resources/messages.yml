@@ -1,6 +1,6 @@
 version: 1
 prefix:
-  main: '&6[&4&lSG&6]'
+  main: '&6[&4&lMG&6]'
   states:
     info: ''
     warning: '&c[Warning] '

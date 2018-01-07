@@ -26,10 +26,10 @@ public class Vote implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg vote - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.vote", "Votes to start the game");
+        return "/mg vote - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.vote", "Votes to start the game");
     }
 
     public String permission() {
-        return "sg.arena.vote";
+        return "mg.arena.vote";
     }
 }

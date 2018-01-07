@@ -39,10 +39,10 @@ public class ResetArena implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg resetarena [<id>] " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.resetarena", "Reset the arena to start state");
+        return "/mg resetarena [<id>] " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.resetarena", "Reset the arena to start state");
     }
 
     public String permission() {
-        return "sg.arena.reset";
+        return "mg.arena.reset";
     }
 }

@@ -55,8 +55,6 @@ public class CommandHandler implements CommandExecutor {
 //		commands.put("setstatswall", new SetStatsWall());
         commands.put("resetarena", new ResetArena());
 //		commands.put("test", new Test());
-
-        // commands.put("sponsor", new Sponsor());
     }
 
     private void loadHelpInfo() {
@@ -85,8 +83,6 @@ public class CommandHandler implements CommandExecutor {
         helpinfo.put("refill", 3);
         helpinfo.put("resetarena", 3);
         //helpinfo.put("setstatswall", 1);
-
-        //helpinfo.put("sponsor", 1);
     }
 
     public boolean onCommand(CommandSender sender, Command cmd1, String commandLabel, String[] args) {

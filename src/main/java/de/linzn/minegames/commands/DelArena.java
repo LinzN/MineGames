@@ -42,10 +42,10 @@ public class DelArena implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg delarena <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.delarena", "Delete an arena");
+        return "/mg delarena <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.delarena", "Delete an arena");
     }
 
     public String permission() {
-        return "sg.admin.deletearena";
+        return "mg.admin.deletearena";
     }
 }

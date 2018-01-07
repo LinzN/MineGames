@@ -568,8 +568,8 @@ public class Game {
                             if (p.getLastDamageCause().getEntityType() == EntityType.PLAYER) {
                                 Player killer = p.getKiller();
                                 msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(),
-                                        "player-" + (MineGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
-                                        "killer-" + ((killer != null) ? (MineGames.auth.contains(killer.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "")
+                                        "player-" + ChatColor.BOLD + p.getName(),
+                                        "killer-" + ((killer != null) ? (ChatColor.BOLD + "")
                                                 + killer.getName() : "Unknown"),
                                         "item-" + ((killer != null) ? ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unknown Item"));
                                 if (killer != null && p != null)
@@ -577,7 +577,7 @@ public class Game {
                                 pk = new PlayerKilledEvent(p, this, killer, p.getLastDamageCause().getCause());
                             } else {
                                 msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(), "player-"
-                                        + (MineGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "")
+                                        + (ChatColor.BOLD + "")
                                         + p.getName(), "killer-" + p.getLastDamageCause().getEntityType());
                                 pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
 
@@ -585,7 +585,7 @@ public class Game {
                             break;
                         default:
                             msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getCause().name(),
-                                    "player-" + (MineGames.auth.contains(p.getName()) ? ChatColor.DARK_RED + "" + ChatColor.BOLD : "") + p.getName(),
+                                    "player-" + (ChatColor.BOLD + "") + p.getName(),
                                     "killer-" + p.getLastDamageCause().getCause());
                             pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
 

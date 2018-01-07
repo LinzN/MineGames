@@ -22,11 +22,11 @@ public class SetLobbyWall implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg addwall <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addwall", "Add a lobby stats wall for Arena <id>");
+        return "/mg addwall <id> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.addwall", "Add a lobby stats wall for Arena <id>");
     }
 
     public String permission() {
-        return "sg.admin.setlobby";
+        return "mg.admin.setlobby";
     }
 
     //TODO: TAKE A W.E SELECTIONA AND SET THE LOBBY. ALSO SET LOBBY WALL

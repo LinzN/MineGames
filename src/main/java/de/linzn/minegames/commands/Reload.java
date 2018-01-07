@@ -56,11 +56,11 @@ public class Reload implements SubCommand {
 
     public String help(Player p) {
         // TODO Auto-generated method stub
-        return "/sg reload [settings|game|all]  Reload module configuration";
+        return "/mg reload [settings|game|all]  Reload module configuration";
     }
 
     public String permission() {
-        return "sg.admin.reload";
+        return "mg.admin.reload";
     }
 
 }

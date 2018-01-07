@@ -13,7 +13,7 @@ public class LeaveQueue implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg lq - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leavequeue", "Leave the queue for any queued games");
+        return "/mg lq - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leavequeue", "Leave the queue for any queued games");
     }
 
     public String permission() {

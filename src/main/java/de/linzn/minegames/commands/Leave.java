@@ -18,7 +18,7 @@ public class Leave implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg leave - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leave", "Leaves the game");
+        return "/mg leave - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.leave", "Leaves the game");
     }
 
     public String permission() {

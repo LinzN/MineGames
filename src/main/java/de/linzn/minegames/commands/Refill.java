@@ -37,10 +37,10 @@ public class Refill implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg refill [<id>] " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.refill", "Refill the chests");
+        return "/mg refill [<id>] " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.refill", "Refill the chests");
     }
 
     public String permission() {
-        return "sg.arena.refill";
+        return "mg.arena.refill";
     }
 }

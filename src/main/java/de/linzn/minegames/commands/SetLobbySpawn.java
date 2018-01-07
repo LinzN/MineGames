@@ -19,10 +19,10 @@ public class SetLobbySpawn implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg setlobbyspawn - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.setlobbyspawn", "Set the lobby spawnpoint");
+        return "/mg setlobbyspawn - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.setlobbyspawn", "Set the lobby spawnpoint");
     }
 
     public String permission() {
-        return "sg.admin.setlobby";
+        return "mg.admin.setlobby";
     }
 }

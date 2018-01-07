@@ -327,7 +327,7 @@ public class LobbyManagerOld implements Listener {
                 for (Player p : active) {
                     if (signno < signs[b].length) {
 
-                        signs[b][signno].setLine(line, (MineGames.auth.contains(p.getName()) ? ChatColor.DARK_BLUE : ChatColor.BLACK) + ((p.getName().equalsIgnoreCase("Double0negative")) ? "Double0" : p.getName()));
+                        signs[b][signno].setLine(line, p.getName());
                         signs[b][signno].update();
 
                         line++;
@@ -339,7 +339,7 @@ public class LobbyManagerOld implements Listener {
                 }
                 for (Player p : inactive) {
                     if (signno < signs[b].length) {
-                        signs[b][signno].setLine(line, (MineGames.auth.contains(p.getName()) ? ChatColor.DARK_RED : ChatColor.GRAY) + ((p.getName().equalsIgnoreCase("Double0negative")) ? "Double0" : p.getName()));
+                        signs[b][signno].setLine(line, p.getName());
                         signs[b][signno].update();
                         line++;
                         if (line == 4) {

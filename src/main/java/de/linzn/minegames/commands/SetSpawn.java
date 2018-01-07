@@ -68,10 +68,10 @@ public class SetSpawn implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg setspawn next - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.setspawn", "Sets a spawn for the arena you are located in");
+        return "/mg setspawn next - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.setspawn", "Sets a spawn for the arena you are located in");
     }
 
     public String permission() {
-        return "sg.admin.setarenaspawns";
+        return "mg.admin.setarenaspawns";
     }
 }

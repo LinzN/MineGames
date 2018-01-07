@@ -29,7 +29,7 @@ public class ListPlayers implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg list [<id>] " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.listplayers", "List all players in the arena you are playing in");
+        return "/mg list [<id>] " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.listplayers", "List all players in the arena you are playing in");
     }
 
     public String permission() {

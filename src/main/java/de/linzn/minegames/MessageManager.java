@@ -38,7 +38,6 @@ public class MessageManager {
      * @param type   Type of message to send
      * @param input  What message you want to send from messages.yml
      * @param player Player you want to send message to
-     * @param vars
      */
     public void sendFMessage(PrefixType type, String input, Player player, String... args) {
         String msg = SettingsManager.getInstance().getMessageConfig().getString("messages." + input);

@@ -39,10 +39,10 @@ public class Flag implements SubCommand {
     }
 
     public String help(Player p) {
-        return "/sg flag <id> <flag> <value> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.flag", "Modifies an arena-specific setting");
+        return "/mg flag <id> <flag> <value> - " + SettingsManager.getInstance().getMessageConfig().getString("messages.help.flag", "Modifies an arena-specific setting");
     }
 
     public String permission() {
-        return "sg.admin.flag";
+        return "mg.admin.flag";
     }
 }
