@@ -1,0 +1,12 @@
+name: MineGames
+main : de.linzn.minegames.MineGames
+version: ${project.version}
+description: MineGaming Survival Games
+author: Niklas Linz
+depend: [WorldGuard, Vault]
+
+commands:
+  mg:
+    description: Plugin command
+    usage: /mg <command> <args>
+    aliases: [sg, hg]
