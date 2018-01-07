@@ -1,6 +1,5 @@
 package de.linzn.minegames;
 
-import de.linzn.minegames.util.NameUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -113,7 +112,7 @@ public class LobbyWall {
         //live player data
         ArrayList<String> display = new ArrayList<String>();
         for (Player p : game.getAllPlayers()) {
-            display.add((game.isPlayerActive(p) ? ChatColor.BLACK : ChatColor.GRAY) + NameUtil.stylize(p.getName(), true, !game.isPlayerActive(p)));
+            display.add((game.isPlayerActive(p) ? ChatColor.BLACK : ChatColor.GRAY) + p.getName());
         }
 
         try {
