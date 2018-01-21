@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class MessageManager {
 
     public static MessageManager instance = new MessageManager();
-    public String pre = ChatColor.BLUE + "" + ChatColor.BOLD + "[" + ChatColor.GOLD + "" + ChatColor.BOLD + "SG" + ChatColor.BLUE + "" + ChatColor.BOLD + "] " + ChatColor.RESET;
+    public String pre = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "[" + ChatColor.GOLD + "" + ChatColor.BOLD + "MineGames" + ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "] " + ChatColor.RESET;
     private HashMap<PrefixType, String> prefix = new HashMap<PrefixType, String>();
 
     public static MessageManager getInstance() {

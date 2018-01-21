@@ -7,7 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,8 +21,8 @@ public class CommandHandler implements CommandExecutor {
 
     public CommandHandler(Plugin plugin) {
         this.plugin = plugin;
-        commands = new HashMap<String, SubCommand>();
-        helpinfo = new HashMap<String, Integer>();
+        commands = new HashMap<>();
+        helpinfo = new HashMap<>();
         loadCommands();
         loadHelpInfo();
     }
@@ -58,8 +57,6 @@ public class CommandHandler implements CommandExecutor {
     }
 
     private void loadHelpInfo() {
-        //you can do this by iterating thru the hashmap from a certain index btw instead of using a new hashmap,
-        //plus, instead of doing three different ifs, just iterate thru and check if the value == the page
         helpinfo.put("join", 1);
         helpinfo.put("vote", 1);
         helpinfo.put("spectate", 1);
@@ -86,43 +83,37 @@ public class CommandHandler implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd1, String commandLabel, String[] args) {
-        PluginDescriptionFile pdfFile = plugin.getDescription();
         if (!(sender instanceof Player)) {
-            // we should really allow some command through, such as
-            // enable, disable, resetarena, reload, listarenas, flag, list
-            // however that might be too awkward
-            msgmgr.logMessage(MessageManager.PrefixType.WARNING, "Only in-game players can use MineGames commands! ");
+            msgmgr.logMessage(MessageManager.PrefixType.WARNING, "Geht leider nur im Spiel.! ");
             return true;
         }
 
         Player player = (Player) sender;
 
         if (MineGames.config_todate == false) {
-            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "The config file is out of date. Please tell an administrator to reset the config.", player);
+            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Die Konfig ist fehlerhaft.", player);
             return true;
         }
 
         if (MineGames.dbcon == false) {
-            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Could not connect to server. Plugin disabled.", player);
+            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Die Datenbank ist offline", player);
             return true;
         }
 
-        if (cmd1.getName().equalsIgnoreCase("survivalgames")) {
+        if (cmd1.getName().equalsIgnoreCase("minegames")) {
             if (args == null || args.length < 1) {
-                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Version " + pdfFile.getVersion() + " originally by Double0negative", player);
-                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Later fixes and updates by ThunderGemios10 and SShipway", player);
-                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Type /sg help <player | staff | admin> for command information", player);
+                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Gib /mg help <spieler | team | admin> ein für die Hilfeseiten", player);
                 return true;
             }
             if (args[0].equalsIgnoreCase("help")) {
                 if (args.length == 1) {
                     help(player, 1);
                 } else {
-                    if (args[1].toLowerCase().startsWith("player")) {
+                    if (args[1].toLowerCase().startsWith("spieler")) {
                         help(player, 1);
                         return true;
                     }
-                    if (args[1].toLowerCase().startsWith("staff")) {
+                    if (args[1].toLowerCase().startsWith("team")) {
                         help(player, 2);
                         return true;
                     }
@@ -130,7 +121,7 @@ public class CommandHandler implements CommandExecutor {
                         help(player, 3);
                         return true;
                     } else {
-                        msgmgr.sendMessage(MessageManager.PrefixType.WARNING, args[1] + " is not a valid page! Valid pages are Player, Staff, and Admin.", player);
+                        msgmgr.sendMessage(MessageManager.PrefixType.WARNING, args[1] + " ist keine gültige Eingabe! Gültig ist Spieler, Team und Admin.", player);
                     }
                 }
                 return true;
@@ -141,16 +132,15 @@ public class CommandHandler implements CommandExecutor {
             l.remove(0);
             args = (String[]) l.toArray(new String[0]);
             if (!commands.containsKey(sub)) {
-                msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Command doesn't exist.", player);
-                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Type /sg help for command information", player);
+                msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Diesen Befehl gibt es nicht.", player);
+                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Gib /mg help ein für die Hilfeseiten", player);
                 return true;
             }
             try {
                 commands.get(sub).onCommand(player, args);
             } catch (Exception e) {
                 e.printStackTrace();
-                msgmgr.sendFMessage(MessageManager.PrefixType.ERROR, "error.command", player, "command-[" + sub + "] " + Arrays.toString(args));
-                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Type /sg help for command information", player);
+                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Gib /mg help ein für die Hilfeseiten", player);
             }
             return true;
         }
@@ -159,13 +149,13 @@ public class CommandHandler implements CommandExecutor {
 
     public void help(Player p, int page) {
         if (page == 1) {
-            p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Player Commands" + ChatColor.BLUE + " ------------");
+            p.sendMessage(ChatColor.DARK_GREEN + "-=========== [" + ChatColor.GOLD + ChatColor.BOLD + "MineGames Spieler" + ChatColor.RESET + ChatColor.DARK_GREEN + "] ===========-");
         }
         if (page == 2) {
-            p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Staff Commands" + ChatColor.BLUE + " ------------");
+            p.sendMessage(ChatColor.DARK_GREEN + "-=========== [" + ChatColor.GOLD + ChatColor.BOLD + "MineGames Team" + ChatColor.RESET + ChatColor.DARK_GREEN + "] ===========-");
         }
         if (page == 3) {
-            p.sendMessage(ChatColor.BLUE + "------------ " + msgmgr.pre + ChatColor.DARK_AQUA + " Admin Commands" + ChatColor.BLUE + " ------------");
+            p.sendMessage(ChatColor.DARK_GREEN + "-=========== [" + ChatColor.GOLD + ChatColor.BOLD + "MineGames Admin" + ChatColor.RESET + ChatColor.DARK_GREEN + "] ===========-");
         }
 
         for (String command : commands.keySet()) {

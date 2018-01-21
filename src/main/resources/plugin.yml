@@ -3,12 +3,11 @@ main : de.linzn.minegames.MineGames
 version: ${project.version}
 description: MineGaming Survival Games
 author: Niklas Linz
-depend: [WorldGuard, Vault]
+depend: [WorldEdit, Vault]
 
 commands:
   minegames:
     description: Plugin command
-    usage: /mg <command> <args>
     aliases: [mg, sg, hg]
 
 permissions:
@@ -39,7 +38,6 @@ permissions:
     mg.player.list:
         description: List all players in the arena you are playing in.
         default: true
-
     mg.staff.*:
         default: op
         description: MineGames Staff Commands
