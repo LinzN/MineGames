@@ -12,7 +12,7 @@ commands:
 
 permissions:
     mg.player.all:
-        default: true
+        default: op
         description: MineGames Player Commands
         children:
             mg.player.play: true
@@ -22,22 +22,22 @@ permissions:
             mg.player.listarenas: true
     mg.player.play:
         description: Allows the user to click a sign to join a game.
-        default: true
+        default: op
     mg.player.vote:
         description: Allows the user to vote to start a game.
-        default: true
+         default: op
     mg.player.spectate:
         description:  Allows the user to spectate a game.
-        default: true
+        default: op
     mg.player.joinlobby:
         description: Allows the use of /sg join to join the lobby.
-        default: true
+        default: op
     mg.player.listarenas:
         description: List all arenas set up.
-        default: true
+        default: op
     mg.player.list:
         description: List all players in the arena you are playing in.
-        default: true
+        default: op
     mg.staff.all:
         default: op
         description: MineGames Staff Commands
