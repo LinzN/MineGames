@@ -15,10 +15,10 @@ public class SetStatsWall implements SubCommand {
 
 
     public String help(Player p) {
-        return null; //"/sg setstatswall - "+ SettingsManager.getInstance().getMessageConfig().getString("messages.help.setstatswall", "Sets the stats wall");
+        return null; //"/mg setstatswall - "+ SettingsManager.getInstance().getMessageConfig().getString("messages.help.setstatswall", "Sets the stats wall");
     }
 
     public String permission() {
-        return "mg.admin.setstatswall";
+        return "mg.admin.setlobby";
     }
 }

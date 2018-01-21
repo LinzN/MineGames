@@ -40,7 +40,7 @@ public class Spectate implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.spectate";
+        return "mg.player.spectate";
     }
 
 }

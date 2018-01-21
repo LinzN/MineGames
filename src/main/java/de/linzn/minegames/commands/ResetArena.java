@@ -43,6 +43,6 @@ public class ResetArena implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.reset";
+        return "mg.staff.reset";
     }
 }

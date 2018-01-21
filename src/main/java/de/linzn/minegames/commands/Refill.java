@@ -41,6 +41,6 @@ public class Refill implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.refill";
+        return "mg.staff.refill";
     }
 }

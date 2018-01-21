@@ -11,7 +11,7 @@ commands:
     aliases: [mg, sg, hg]
 
 permissions:
-    mg.player.*:
+    mg.player.all:
         default: true
         description: MineGames Player Commands
         children:
@@ -38,15 +38,18 @@ permissions:
     mg.player.list:
         description: List all players in the arena you are playing in.
         default: true
-    mg.staff.*:
+    mg.staff.all:
         default: op
         description: MineGames Staff Commands
         children:
-            mg.player.*: true
+            mg.player.all: true
             mg.staff.forcestart: true
             mg.staff.disablearena: true
             mg.staff.enablearena: true
             mg.staff.nocmdblock: true
+            mg.staff.reset: true
+            mg.staff.refill: true
+            mg.staff.teleport: true
     mg.staff.forcestart:
         description: Allows the user to force start a game.
         default: op
@@ -59,17 +62,19 @@ permissions:
     mg.staff.nocmdblock:
         description: Allows user to bypass in-game command block.
         default: op
-    mg.admin.*:
+    mg.admin.all:
         default: op
         description: MineGames Admin Commands
         children:
-            mg.staff.*: true
+            mg.staff.all: true
             mg.admin.createarena: true
             mg.admin.setarenaspawns: true
             mg.admin.resetspawns: true
             mg.admin.deletearena: true
             mg.admin.setlobby: true
             mg.admin.flag: true
+            mg.admin.addwall: true
+            mg.admin.reload: true
     mg.admin.createarena:
         description: Allows the user to create an arena.
         default: op
@@ -87,4 +92,19 @@ permissions:
         default: op
     mg.admin.flag:
         description: Allows the user to modify per-arena flags.
+        default: op
+    mg.admin.addwall:
+        description: Allows the user to modify per-arena flags.
+        default: op
+    mg.admin.reload:
+        description: .
+        default: op
+    mg.staff.reset:
+        description: .
+        default: op
+    mg.staff.refill:
+        description: .
+        default: op
+    mg.staff.teleport:
+        description: .
         default: op

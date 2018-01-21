@@ -42,6 +42,6 @@ public class Enable implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.enable";
+        return "mg.staff.enablearena";
     }
 }

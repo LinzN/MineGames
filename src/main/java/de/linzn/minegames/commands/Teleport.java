@@ -34,7 +34,7 @@ public class Teleport implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.teleport";
+        return "mg.staff.teleport";
     }
 
 }

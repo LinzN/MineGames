@@ -39,6 +39,6 @@ public class Disable implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.disable";
+        return "mg.staff.disablearena";
     }
 }

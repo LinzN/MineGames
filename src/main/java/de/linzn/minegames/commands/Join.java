@@ -23,7 +23,7 @@ public class Join implements SubCommand {
                 MessageManager.getInstance().sendFMessage(PrefixType.WARNING, "error.nopermission", player);
             }
         } else {
-            if (player.hasPermission("sg.lobby.join")) {
+            if (player.hasPermission("mg.player.joinlobby")) {
                 if (GameManager.getInstance().getPlayerGameId(player) != -1) {
                     MessageManager.getInstance().sendMessage(PrefixType.ERROR, "error.alreadyingame", player);
                     return true;
@@ -42,7 +42,7 @@ public class Join implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.join";
+        return "mg.player.play";
     }
 }
 

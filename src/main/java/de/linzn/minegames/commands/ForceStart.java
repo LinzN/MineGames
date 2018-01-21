@@ -39,7 +39,7 @@ public class ForceStart implements SubCommand {
 
 
         Game g = GameManager.getInstance().getGame(game);
-        if (g.getMode() != Game.GameMode.WAITING && !player.hasPermission("sg.arena.restart")) {
+        if (g.getMode() != Game.GameMode.WAITING && !player.hasPermission("mg.stuff.forcestart")) {
             MessageManager.getInstance().sendFMessage(PrefixType.ERROR, "error.alreadyingame", player);
             return true;
         }
@@ -55,6 +55,6 @@ public class ForceStart implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.start";
+        return "mg.staff.forcestart";
     }
 }

@@ -25,7 +25,7 @@ public class AddWall implements SubCommand {
     }
 
     public String permission() {
-        return "mmg.admin.addwall";
+        return "mg.admin.addwall";
     }
 
     //TODO: TAKE A W.E SELECTIONA AND SET THE LOBBY. ALSO SET LOBBY WALL

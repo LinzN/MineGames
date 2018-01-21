@@ -30,6 +30,6 @@ public class Vote implements SubCommand {
     }
 
     public String permission() {
-        return "mg.arena.vote";
+        return "mg.player.vote";
     }
 }
