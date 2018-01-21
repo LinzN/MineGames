@@ -200,7 +200,7 @@ public class Game {
             msgmgr.sendFMessage(MessageManager.PrefixType.WARNING, "error.nolobbyspawn", p);
             return false;
         }
-        if (!p.hasPermission("mg.player.join." + gameID) && !p.hasPermission("mg.player.join.*")) {
+        if (!p.hasPermission("mg.player.join." + gameID) && !p.hasPermission("mg.player.join.all")) {
             debug("permission needed to join arena: " + "mg.player.join." + gameID);
             msgmgr.sendFMessage(MessageManager.PrefixType.WARNING, "game.nopermission", p, "arena-" + gameID);
             return false;

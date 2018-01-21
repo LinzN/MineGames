@@ -62,8 +62,6 @@ public class LobbyWall {
             Collections.reverse(signs);
         }
         addMsg("MineGames");
-        addMsg("Double0negative");
-        addMsg("mc-sg.org");
         addMsg("Game id: " + gameid);
         update();
         return true;
