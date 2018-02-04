@@ -16,7 +16,7 @@ public class Spectate implements SubCommand {
 
         if (args.length == 0) {
             if (GameManager.getInstance().isSpectator(player)) {
-                GameManager.getInstance().removeSpectator(player);
+                GameManager.getInstance().removeSpectator(player, false);
                 return true;
             } else {
                 MessageManager.getInstance().sendFMessage(MessageManager.PrefixType.ERROR, "error.notspecified", player, "input-Game ID");

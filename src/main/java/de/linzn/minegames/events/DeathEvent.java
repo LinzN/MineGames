@@ -54,7 +54,7 @@ public class DeathEvent implements Listener {
                     l.getWorld().dropItemNaturally(l, i);
             }
 
-            GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).killPlayer(player, false);
+            GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).killPlayer(player, false, false);
 
 
         }

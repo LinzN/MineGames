@@ -187,12 +187,12 @@ public class GameManager {
         return null;
     }
 
-    public void removePlayer(Player p, boolean b) {
-        getGame(getPlayerGameId(p)).removePlayer(p, b);
+    public void removePlayer(Player p, boolean b, boolean onLogout) {
+        getGame(getPlayerGameId(p)).removePlayer(p, b, onLogout);
     }
 
-    public void removeSpectator(Player p) {
-        getGame(getPlayerSpectateId(p)).removeSpectator(p);
+    public void removeSpectator(Player p, boolean onLogout) {
+        getGame(getPlayerSpectateId(p)).removeSpectator(p, onLogout);
     }
 
     public void disableGame(int id) {

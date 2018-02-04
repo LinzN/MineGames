@@ -1,5 +1,6 @@
 package de.linzn.minegames;
 
+import de.linzn.mineProfile.core.CookieApi;
 import de.linzn.minegames.api.PlayerJoinArenaEvent;
 import de.linzn.minegames.api.PlayerKilledEvent;
 import de.linzn.minegames.api.PlayerLeaveArenaEvent;
@@ -48,7 +49,6 @@ public class Game {
     private FileConfiguration config;
     private FileConfiguration system;
     private HashMap<Integer, Player> spawns = new HashMap<Integer, Player>();
-    private HashMap<Player, ItemStack[][]> inv_store = new HashMap<Player, ItemStack[][]>();
     private int spawnCount = 0;
     private int vote = 0;
     private boolean disabled = false;
@@ -218,7 +218,7 @@ public class Game {
         if (p.isInsideVehicle()) {
             p.leaveVehicle();
         }
-        if (spectators.contains(p)) removeSpectator(p);
+        if (spectators.contains(p)) removeSpectator(p, false);
         if (mode == GameMode.WAITING || mode == GameMode.STARTING) {
             if (activePlayers.size() < SettingsManager.getInstance().getSpawnCount(gameID)) {
                 msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Joining Arena " + gameID, p);
@@ -235,8 +235,8 @@ public class Game {
                         p.setGameMode(org.bukkit.GameMode.SURVIVAL);
 
                         p.teleport(SettingsManager.getInstance().getLobbySpawn());
-                        saveInv(p);
-                        clearInv(p);
+                        //saveInv(p);
+                        this.savePlayerData(p);
                         p.teleport(SettingsManager.getInstance().getSpawnPoint(gameID, a));
 
                         p.setHealth(p.getMaxHealth());
@@ -270,6 +270,7 @@ public class Game {
                 return false;
             }
             msgFall(MessageManager.PrefixType.INFO, "game.playerjoingame", "player-" + p.getName(), "activeplayers-" + getActivePlayers(), "maxplayers-" + SettingsManager.getInstance().getSpawnCount(gameID));
+            p.sendMessage("Vote für den Start des Spiels mit /mg vote");
             if (activePlayers.size() >= config.getInt("auto-start-players") && !countdownRunning)
                 countdown(config.getInt("auto-start-time"));
             return true;
@@ -371,7 +372,9 @@ public class Game {
         }
         vote++;
         voted.add(pl);
-        msgmgr.sendFMessage(MessageManager.PrefixType.INFO, "game.playervote", pl, "player-" + pl.getName());
+        for (Player p : activePlayers) {
+            msgmgr.sendFMessage(MessageManager.PrefixType.INFO, "game.playervote", p, "player-" + pl.getName());
+        }
         HookManager.getInstance().runHook("PLAYER_VOTE", "player-" + pl.getName());
 		/*for(Player p: activePlayers){
             p.sendMessage(ChatColor.AQUA+pl.getName()+" Voted to start the game! "+ Math.round((vote +0.0) / ((getActivePlayers() +0.0)*100)) +"/"+((c.getInt("auto-start-vote")+0.0))+"%");
@@ -494,15 +497,16 @@ public class Game {
         }
     }
 
-    public void removePlayer(Player p, boolean b) {
+    public void removePlayer(Player p, boolean b, boolean onLeave) {
         p.teleport(SettingsManager.getInstance().getLobbySpawn());
         ///$("Teleporting to lobby");
         if (mode == GameMode.INGAME) {
-            killPlayer(p, b);
+            killPlayer(p, b, onLeave);
         } else {
             sm.removePlayer(p, gameID);
             //	if (!b) p.teleport(SettingsManager.getInstance().getLobbySpawn());
-            restoreInv(p);
+            //restoreInv(p);
+            this.loadPlayerData(p, onLeave);
             activePlayers.remove(p);
             inactivePlayers.remove(p);
             for (Object in : spawns.keySet().toArray()) {
@@ -545,7 +549,7 @@ public class Game {
      *
      */
     @SuppressWarnings("deprecation")
-    public void killPlayer(Player p, boolean left) {
+    public void killPlayer(Player p, boolean left, boolean onLeave) {
         try {
             clearInv(p);
             if (!left) {
@@ -554,7 +558,7 @@ public class Game {
             sm.playerDied(p, activePlayers.size(), gameID, new Date().getTime() - startTime);
 
             if (!activePlayers.contains(p)) return;
-            else restoreInv(p);
+            else this.loadPlayerData(p, onLeave);
 
             activePlayers.remove(p);
             inactivePlayers.add(p);
@@ -651,7 +655,8 @@ public class Game {
         Player win = activePlayers.get(0);
         // clearInv(p);
         win.teleport(SettingsManager.getInstance().getLobbySpawn());
-        restoreInv(win);
+        //restoreInv(win);
+        this.loadPlayerData(win, false);
         msgmgr.broadcastFMessage(MessageManager.PrefixType.INFO, "game.playerwin", "arena-" + gameID, "victim-" + p.getName(), "player-" + win.getName());
         LobbyManager.getInstance().display(new String[]{
                 win.getName(), "", "Won the ", "Survival Games!"
@@ -712,7 +717,7 @@ public class Game {
 
                 Player p = activePlayers.get(a);
                 msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Game disabled!", p);
-                removePlayer(p, false);
+                removePlayer(p, false, false);
             } catch (Exception e) {
             }
 
@@ -774,19 +779,16 @@ public class Game {
         LobbyManager.getInstance().updateWall(gameID);
     }
 
-    public void saveInv(Player p) {
-        ItemStack[][] store = new ItemStack[2][1];
-
-        store[0] = p.getInventory().getContents();
-        store[1] = p.getInventory().getArmorContents();
-
-        inv_store.put(p, store);
-
+    public void savePlayerData(Player p) {
+        CookieApi.onLeave(p);
     }
 
-    public void restoreInvOffline(String p) {
-        restoreInv(Bukkit.getPlayer(p));
+    public void loadPlayerData(Player p, boolean onLogout) {
+        if (!onLogout) {
+            CookieApi.onlogin(p);
+        }
     }
+
 
     public void addSpectator(Player p) {
         if (mode != GameMode.INGAME) {
@@ -794,7 +796,8 @@ public class Game {
             return;
         }
 
-        saveInv(p);
+        //saveInv(p);
+        this.savePlayerData(p);
         clearInv(p);
         p.teleport(SettingsManager.getInstance().getSpawnPoint(gameID, 1).add(0, 10, 0));
 
@@ -807,13 +810,13 @@ public class Game {
         p.setAllowFlight(true);
         p.setFlying(true);
         spectators.add(p.getName());
-        msgmgr.sendMessage(MessageManager.PrefixType.INFO, "You are now spectating! Use /sg spectate again to return to the lobby.", p);
+        msgmgr.sendMessage(MessageManager.PrefixType.INFO, "You are now spectating! Use /mg spectate again to return to the lobby.", p);
         msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Right click while holding shift to teleport to the next ingame player, left click to go back.", p);
         nextspec.put(p, 0);
     }
 
     @SuppressWarnings("deprecation")
-    public void removeSpectator(Player p) {
+    public void removeSpectator(Player p, boolean onLogout) {
         ArrayList<Player> players = new ArrayList<Player>();
         players.addAll(activePlayers);
         players.addAll(inactivePlayers);
@@ -823,17 +826,10 @@ public class Game {
                 pl.showPlayer(p);
             }
         }
-        restoreInv(p);
-        p.setAllowFlight(false);
-        p.setFlying(false);
+        this.loadPlayerData(p, onLogout);
         p.setFallDistance(0);
-        p.setHealth(p.getMaxHealth());
-        p.setFoodLevel(20);
-        p.setSaturation(20);
         p.teleport(SettingsManager.getInstance().getLobbySpawn());
-        // Bukkit.getServer().broadcastPrefixType("Removing Spec "+p.getName()+" "+spectators.size()+" left");
         spectators.remove(p.getName());
-        // Bukkit.getServer().broadcastPrefixType("Removed");
 
         nextspec.remove(p);
     }
@@ -853,7 +849,7 @@ public class Game {
     public void clearSpecs() {
 
         for (int a = 0; a < spectators.size(); a = 0) {
-            removeSpectator(Bukkit.getPlayerExact(spectators.get(0)));
+            removeSpectator(Bukkit.getPlayerExact(spectators.get(0)), false);
         }
         spectators.clear();
         nextspec.clear();
@@ -863,16 +859,6 @@ public class Game {
         return nextspec;
     }
 
-    public void restoreInv(Player p) {
-        try {
-            clearInv(p);
-            p.getInventory().setContents(inv_store.get(p)[0]);
-            p.getInventory().setArmorContents(inv_store.get(p)[1]);
-            inv_store.remove(p);
-            p.updateInventory();
-        } catch (Exception e) { /*p.sendMessage(ChatColor.RED+"Inentory failed to restore or nothing was in it.");*/
-        }
-    }
 
     public void clearInv(Player p) {
         ItemStack[] inv = p.getInventory().getContents();
