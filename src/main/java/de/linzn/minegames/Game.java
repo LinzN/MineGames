@@ -1,6 +1,7 @@
 package de.linzn.minegames;
 
-import de.linzn.mineProfile.core.CookieApi;
+
+import de.linzn.mineProfile.core.PlayerDataAPI;
 import de.linzn.minegames.api.PlayerJoinArenaEvent;
 import de.linzn.minegames.api.PlayerKilledEvent;
 import de.linzn.minegames.api.PlayerLeaveArenaEvent;
@@ -780,12 +781,12 @@ public class Game {
     }
 
     public void savePlayerData(Player p) {
-        CookieApi.onLeave(p);
+        PlayerDataAPI.unloadProfile(p, true);
     }
 
     public void loadPlayerData(Player p, boolean onLogout) {
         if (!onLogout) {
-            CookieApi.onlogin(p);
+            PlayerDataAPI.loadProfile(p);
         }
     }
 
