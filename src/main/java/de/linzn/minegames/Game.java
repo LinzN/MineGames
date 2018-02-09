@@ -271,7 +271,7 @@ public class Game {
                 return false;
             }
             msgFall(MessageManager.PrefixType.INFO, "game.playerjoingame", "player-" + p.getName(), "activeplayers-" + getActivePlayers(), "maxplayers-" + SettingsManager.getInstance().getSpawnCount(gameID));
-            p.sendMessage("Vote für den Start des Spiels mit /mg vote");
+            p.sendMessage(ChatColor.GOLD + "Vote für den Start des Spiels mit /mg vote");
             if (activePlayers.size() >= config.getInt("auto-start-players") && !countdownRunning)
                 countdown(config.getInt("auto-start-time"));
             return true;
@@ -296,7 +296,7 @@ public class Game {
             msgmgr.sendFMessage(MessageManager.PrefixType.WARNING, "error.gamedisabled", p, "arena-" + gameID);
         else if (mode == GameMode.RESETING)
             msgmgr.sendFMessage(MessageManager.PrefixType.WARNING, "error.gamereseting", p);
-        else msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Cannot join game!", p);
+        else msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Spiel beitreten fehlgeschlagen!", p);
         LobbyManager.getInstance().updateWall(gameID);
         return false;
     }
@@ -360,15 +360,15 @@ public class Game {
 
 
         if (GameMode.STARTING == mode) {
-            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Game already starting!", pl);
+            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Spiel startet bereits!", pl);
             return;
         }
         if (GameMode.WAITING != mode) {
-            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Game already started!", pl);
+            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Spiel hat bereits angefangen!", pl);
             return;
         }
         if (voted.contains(pl)) {
-            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You already voted!", pl);
+            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Du hast bereits gevotet!", pl);
             return;
         }
         vote++;
@@ -385,7 +385,7 @@ public class Game {
             countdown(config.getInt("auto-start-time"));
             for (Player p : activePlayers) {
                 //p.sendMessage(ChatColor.LIGHT_PURPLE + "Game Starting in " + c.getInt("auto-start-time"));
-                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Game starting in " + config.getInt("auto-start-time") + "!", p);
+                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Spiel startet in " + config.getInt("auto-start-time") + "!", p);
             }
         }
     }
@@ -408,7 +408,7 @@ public class Game {
 
         if (activePlayers.size() <= 0) {
             for (Player pl : activePlayers) {
-                msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Not enough players!", pl);
+                msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Nicht genug Spieler", pl);
                 mode = GameMode.WAITING;
                 LobbyManager.getInstance().updateWall(gameID);
 
@@ -430,12 +430,12 @@ public class Game {
             }
             if (config.getInt("grace-period") != 0) {
                 for (Player play : activePlayers) {
-                    msgmgr.sendMessage(MessageManager.PrefixType.INFO, "You have a " + config.getInt("grace-period") + " second grace period!", play);
+                    msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Du hast eine Schutzzeit von " + config.getInt("grace-period") + " Sekunden!", play);
                 }
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable() {
                     public void run() {
                         for (Player play : activePlayers) {
-                            msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Grace period has ended!", play);
+                            msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Die Schutzzeit ist abgelaufen. Lasst die Spiele beginnen", play);
                         }
                     }
                 }, config.getInt("grace-period") * 20);
@@ -575,8 +575,8 @@ public class Game {
                                 msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(),
                                         "player-" + ChatColor.BOLD + p.getName(),
                                         "killer-" + ((killer != null) ? (ChatColor.BOLD + "")
-                                                + killer.getName() : "Unknown"),
-                                        "item-" + ((killer != null) ? ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unknown Item"));
+                                                + killer.getName() : "Unbekannt"),
+                                        "item-" + ((killer != null) ? ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unbekanntes Item"));
                                 if (killer != null && p != null)
                                     sm.addKill(killer, p, gameID);
                                 pk = new PlayerKilledEvent(p, this, killer, p.getLastDamageCause().getCause());
@@ -600,8 +600,8 @@ public class Game {
 
                     if (getActivePlayers() > 1) {
                         for (Player pl : getAllPlayers()) {
-                            msgmgr.sendMessage(MessageManager.PrefixType.INFO, ChatColor.DARK_AQUA + "There are " + ChatColor.YELLOW + ""
-                                    + getActivePlayers() + ChatColor.DARK_AQUA + " players remaining!", pl);
+                            msgmgr.sendMessage(MessageManager.PrefixType.INFO, ChatColor.DARK_AQUA + "Es verbleiben " + ChatColor.YELLOW + ""
+                                    + getActivePlayers() + ChatColor.DARK_AQUA + " Spieler!", pl);
                         }
                     }
                 }
@@ -660,7 +660,7 @@ public class Game {
         this.loadPlayerData(win, false);
         msgmgr.broadcastFMessage(MessageManager.PrefixType.INFO, "game.playerwin", "arena-" + gameID, "victim-" + p.getName(), "player-" + win.getName());
         LobbyManager.getInstance().display(new String[]{
-                win.getName(), "", "Won the ", "Survival Games!"
+                win.getName(), "", "Gewinnt die ", "MineGames!"
         }, gameID);
 
         mode = GameMode.FINISHING;
@@ -768,7 +768,7 @@ public class Game {
 
         Bukkit.getScheduler().cancelTask(endgameTaskID);
         GameManager.getInstance().gameEndCallBack(gameID);
-        QueueManager.getInstance().rollback(gameID, false);
+        QueueManager.getInstance().rollback(gameID, true);
         LobbyManager.getInstance().updateWall(gameID);
 
     }
@@ -793,7 +793,7 @@ public class Game {
 
     public void addSpectator(Player p) {
         if (mode != GameMode.INGAME) {
-            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You can only spectate running games!", p);
+            msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Du kannst leider nur zuschauen!", p);
             return;
         }
 
@@ -811,7 +811,7 @@ public class Game {
         p.setAllowFlight(true);
         p.setFlying(true);
         spectators.add(p.getName());
-        msgmgr.sendMessage(MessageManager.PrefixType.INFO, "You are now spectating! Use /mg spectate again to return to the lobby.", p);
+        msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Du schaust jetzt zu! Benutze /mg spectate nochmal, um wieder zur Lobby zu gelangen.", p);
         msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Right click while holding shift to teleport to the next ingame player, left click to go back.", p);
         nextspec.put(p, 0);
     }
@@ -982,7 +982,7 @@ public class Game {
         public void run() {
             if (SettingsManager.getGameWorld(gameID).getTime() > 14000) {
                 for (Player pl : activePlayers) {
-                    msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Chests restocked!", pl);
+                    msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Truhen wieder aufgefüllt!", pl);
                 }
                 QueueManager.getInstance().restockChests(gameID);
                 //GameManager.openedChest.get(gameID).clear();
