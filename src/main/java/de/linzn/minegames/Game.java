@@ -1,6 +1,7 @@
 package de.linzn.minegames;
 
 
+import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import de.linzn.mineProfile.core.PlayerDataAPI;
 import de.linzn.minegames.api.PlayerJoinArenaEvent;
 import de.linzn.minegames.api.PlayerKilledEvent;
@@ -781,11 +782,13 @@ public class Game {
     }
 
     public void savePlayerData(Player p) {
+        BleedTimerTask.bleedOut(p);
         PlayerDataAPI.unloadProfile(p, true);
     }
 
     public void loadPlayerData(Player p, boolean onLogout) {
         if (!onLogout) {
+            BleedTimerTask.bleedOut(p);
             PlayerDataAPI.loadProfile(p);
         }
     }
