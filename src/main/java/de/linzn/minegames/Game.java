@@ -2,6 +2,7 @@ package de.linzn.minegames;
 
 
 import com.gmail.nossr50.runnables.skills.BleedTimerTask;
+import de.linzn.mineLib.title.MineTitle;
 import de.linzn.mineProfile.core.PlayerDataAPI;
 import de.linzn.mineProfile.modies.VanishMode;
 import de.linzn.minegames.api.PlayerJoinArenaEvent;
@@ -21,7 +22,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scoreboard.*;
 
@@ -385,10 +385,10 @@ public class Game {
         // Bukkit.getServer().broadcastPrefixType((vote +0.0) / (getActivePlayers() +0.0) +"% voted, needs "+(c.getInt("auto-start-vote")+0.0)/100);
         if ((((vote + 0.0) / (getActivePlayers() + 0.0)) >= (config.getInt("auto-start-vote") + 0.0) / 100) && getActivePlayers() > 1) {
             countdown(config.getInt("auto-start-time"));
-            for (Player p : activePlayers) {
+            // for (Player p : activePlayers) {
                 //p.sendMessage(ChatColor.LIGHT_PURPLE + "Game Starting in " + c.getInt("auto-start-time"));
-                msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Spiel startet in " + config.getInt("auto-start-time") + "!", p);
-            }
+            // msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Spiel startet in " + config.getInt("auto-start-time") + "!", p);
+            //}
         }
     }
 
@@ -413,15 +413,14 @@ public class Game {
                 msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Nicht genug Spieler", pl);
                 mode = GameMode.WAITING;
                 LobbyManager.getInstance().updateWall(gameID);
-
             }
             return;
         } else {
             startTime = new Date().getTime();
             for (Player pl : activePlayers) {
                 pl.setHealth(pl.getMaxHealth());
-                //clearInv(pl);
-                msgmgr.sendFMessage(MessageManager.PrefixType.INFO, "game.goodluck", pl);
+                new MineTitle("" + ChatColor.YELLOW + ChatColor.BOLD + "Viel Glück!", ChatColor.YELLOW + "Du hast eine Schutzzeit von " + config.getInt("grace-period") + " Sekunden!", 10, 40, 20).send(pl);
+
             }
             if (config.getBoolean("restock-chest")) {
                 SettingsManager.getGameWorld(gameID).setTime(0);
@@ -431,14 +430,9 @@ public class Game {
                         14400));
             }
             if (config.getInt("grace-period") != 0) {
-                for (Player play : activePlayers) {
-                    msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Du hast eine Schutzzeit von " + config.getInt("grace-period") + " Sekunden!", play);
-                }
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), new Runnable() {
-                    public void run() {
-                        for (Player play : activePlayers) {
-                            msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Die Schutzzeit ist abgelaufen. Lasst die Spiele beginnen", play);
-                        }
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), () -> {
+                    for (Player play : activePlayers) {
+                        new MineTitle("" + ChatColor.RED + ChatColor.BOLD + "Schutzzeit Abgelaufen!", ChatColor.YELLOW + "Lass die MineGames beginnen!", 10, 40, 20).send(play);
                     }
                 }, config.getInt("grace-period") * 20);
             }
@@ -477,23 +471,33 @@ public class Game {
 
         if (mode == GameMode.WAITING || mode == GameMode.STARTING) {
             mode = GameMode.STARTING;
-            tid = Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin) GameManager.getInstance().getPlugin(), new Runnable() {
-                public void run() {
-                    if (count > 0) {
-                        if (count % 10 == 0) {
-                            msgFall(MessageManager.PrefixType.INFO, "game.countdown", "t-" + count);
+            tid = Bukkit.getScheduler().scheduleSyncRepeatingTask(GameManager.getInstance().getPlugin(), () -> {
+                if (count > 0) {
+                    if (count == 20) {
+                        for (Player p : activePlayers) {
+                            new MineTitle("" + ChatColor.GREEN + ChatColor.BOLD + "Der Countdown beginnt!", "" + ChatColor.GREEN + ChatColor.BOLD + "Bereitet euch vor!", 5, 40, 20).send(p);
                         }
-                        if (count < 6) {
-                            msgFall(MessageManager.PrefixType.INFO, "game.countdown", "t-" + count);
-
-                        }
-                        count--;
-                        LobbyManager.getInstance().updateWall(gameID);
-                    } else {
-                        startGame();
-                        Bukkit.getScheduler().cancelTask(tid);
-                        countdownRunning = false;
                     }
+                    if (count < 15 && count > 10) {
+                        for (Player p : activePlayers) {
+                            new MineTitle(ChatColor.GREEN + "Spiel startet in", "" + ChatColor.RED + ChatColor.BOLD + count, 5, 20, 5).send(p);
+                        }
+                    }
+
+                    if (count <= 10) {
+                        //todo Tittle API
+                        for (Player p : activePlayers) {
+                            new MineTitle("" + ChatColor.RED + ChatColor.BOLD + count, ChatColor.YELLOW + "Spiel startet in", 5, 20, 5).send(p);
+                        }
+                        //msgFall(MessageManager.PrefixType.INFO, "game.countdown", "t-" + count);
+
+                    }
+                    count--;
+                    LobbyManager.getInstance().updateWall(gameID);
+                } else {
+                    startGame();
+                    Bukkit.getScheduler().cancelTask(tid);
+                    countdownRunning = false;
                 }
             }, 0, 20);
 
