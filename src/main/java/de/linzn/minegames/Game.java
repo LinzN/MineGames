@@ -3,6 +3,7 @@ package de.linzn.minegames;
 
 import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import de.linzn.mineProfile.core.PlayerDataAPI;
+import de.linzn.mineProfile.modies.VanishMode;
 import de.linzn.minegames.api.PlayerJoinArenaEvent;
 import de.linzn.minegames.api.PlayerKilledEvent;
 import de.linzn.minegames.api.PlayerLeaveArenaEvent;
@@ -784,6 +785,7 @@ public class Game {
     public void savePlayerData(Player p) {
         BleedTimerTask.bleedOut(p);
         PlayerDataAPI.unloadProfile(p, true);
+        new VanishMode(p, 0, false);
     }
 
     public void loadPlayerData(Player p, boolean onLogout) {
