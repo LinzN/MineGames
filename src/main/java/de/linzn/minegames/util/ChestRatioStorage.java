@@ -14,7 +14,7 @@ import java.util.Random;
 public class ChestRatioStorage {
 
     public static ChestRatioStorage instance = new ChestRatioStorage();
-    HashMap<Integer, ArrayList<ItemStack>> lvlstore = new HashMap<Integer, ArrayList<ItemStack>>();
+    HashMap<Integer, ArrayList<ItemStack>> lvlstore = new HashMap<>();
     private int ratio = 2;
     private int maxlevel = 0;
     private int minitems = 4;
@@ -37,8 +37,8 @@ public class ChestRatioStorage {
             List<String> list = conf.getStringList("chest.lvl" + clevel);
 
             if (!list.isEmpty()) {
-                for (int b = 0; b < list.size(); b++) {
-                    ItemStack i = ItemReader.read(list.get(b));
+                for (String aList : list) {
+                    ItemStack i = ItemReader.read(aList);
                     lvl.add(i);
                 }
                 lvlstore.put(clevel, lvl);
@@ -73,9 +73,9 @@ public class ChestRatioStorage {
     }
 
     public ArrayList<ItemStack> getItems(int level) {
-        int newlevel = level;
+        int newlevel;
         Random r = new Random();
-        ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+        ArrayList<ItemStack> items = new ArrayList<>();
 
         for (int a = 0; a < r.nextInt(maxitems - minitems) + minitems; a++) {
             newlevel = level;

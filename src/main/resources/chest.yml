@@ -27,54 +27,48 @@ chest:
   max: 10
   maxincrease: 5
   lvl1:
-  - 268,1
-  - 298,1
-  - 299,1
-  - 300,1
-  - 301,1
-  - 319,3
-  - 349,3
-  - 260,3
-  - 262,5
+  - 'wooden_sword,1'
+  - 'leather_helmet,1'
+  - 'leather_chestplate,1'
+  - 'leather_leggings,1'
+  - 'leather_boots,1'
+  - 'porkchop,3'
+  - 'fish,3'
+  - 'apple,3'
+  - 'arrow,5'
   lvl2:
-  - 268,1
-  - 314,1
-  - 315,1
-  - 316,1
-  - 317,1
-  - 320,3
-  - 281,4
-  - 260,2
-  - 363,4
-  - 364,2
-  - 365,4
-  - 366,2
-  - 368,2
-  - 282,1
+  - 'wooden_sword,1'
+  - 'golden_helmet,1'
+  - 'golden_chestplate,1'
+  - 'golden_leggings,1'
+  - 'golden_boots,1'
+  - 'cooked_porkchop,3'
+  - 'bowl,4'
+  - 'apple,2'
+  - 'beef,4'
+  - 'cooked_beef,2'
+  - 'chicken,4'
+  - 'cooked_chicken,2'
+  - 'mushroom_stew,1'
   lvl3:
-  - 283,1
-  - 103,4
-  - 306,1
-  - 307,1
-  - 308,1
-  - 309,1
-  - 302,1
-  - 303,1
-  - 305,1
-  - 322,2
-  - 259,1
-  - 283,1
+  - 'golden_sword,1'
+  - 'melon_block,4'
+  - 'iron_helmet,1'
+  - 'iron_chestplate,1'
+  - 'iron_leggings,1'
+  - 'iron_boots,1'
+  - 'chainmail_helmet,1'
+  - 'chainmail_chestplate,1'
+  - 'chainmail_boots,1'
+  - 'golden_apple,2'
+  - 'flint_and_steel,1'
+  - 'golden_sword,1'
   lvl4:
-  - 267,1
+  - 'iron_sword,1'
   lvl5:
-  - 276,1
-  - 310,1
-  - 311,1
-  - 312,1
-  - 313,1
-  - 354,2
-
-  
-  
-  
-  
+  - 'diamond_sword,1,0,sharpness:5 knockback:2,Der MineGamer'
+  - 'diamond_helmet,1'
+  - 'diamond_chestplate,1'
+  - 'diamond_leggings,1'
+  - 'diamond_boots,1'
+  - 'cake,2'

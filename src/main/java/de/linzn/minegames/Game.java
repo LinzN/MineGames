@@ -273,7 +273,7 @@ public class Game {
                 return false;
             }
             msgFall(MessageManager.PrefixType.INFO, "game.playerjoingame", "player-" + p.getName(), "activeplayers-" + getActivePlayers(), "maxplayers-" + SettingsManager.getInstance().getSpawnCount(gameID));
-            p.sendMessage(ChatColor.GOLD + "Vote für den Start des Spiels mit /mg vote");
+            msgmgr.sendMessage(MessageManager.PrefixType.INFO, ChatColor.GOLD + "Vote für den Start des Spiels mit /mg vote", p);
             if (activePlayers.size() >= config.getInt("auto-start-players") && !countdownRunning)
                 countdown(config.getInt("auto-start-time"));
             return true;
@@ -569,35 +569,38 @@ public class Game {
 
             activePlayers.remove(p);
             inactivePlayers.add(p);
-            PlayerKilledEvent pk = null;
+            PlayerKilledEvent pk;
             if (left) {
                 msgFall(MessageManager.PrefixType.INFO, "game.playerleavegame", "player-" + p.getName());
             } else {
                 if (mode != GameMode.WAITING && p.getLastDamageCause() != null && p.getLastDamageCause().getCause() != null) {
+                    System.out.println("Type: " + p.getLastDamageCause().getCause().name());
                     switch (p.getLastDamageCause().getCause()) {
                         case ENTITY_ATTACK:
-                            if (p.getLastDamageCause().getEntityType() == EntityType.PLAYER) {
+                            if (p.getLastDamageCause().getEntityType() == EntityType.PLAYER && p.getKiller() != null) {
                                 Player killer = p.getKiller();
-                                msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(),
-                                        "player-" + ChatColor.BOLD + p.getName(),
-                                        "killer-" + ((killer != null) ? (ChatColor.BOLD + "")
-                                                + killer.getName() : "Unbekannt"),
-                                        "item-" + ((killer != null) ? ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unbekanntes Item"));
-                                if (killer != null && p != null)
-                                    sm.addKill(killer, p, gameID);
+                                msgRawFall(MessageManager.PrefixType.INFO, ChatColor.GREEN + "Spieler " + ChatColor.GOLD + p.getName() + ChatColor.GREEN + " ist durch die Hand von " + ChatColor.GOLD + killer.getName() + ChatColor.GREEN + " gestorben!");
+                                //msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(),
+                                //        "player-" + ChatColor.BOLD + p.getName(),
+                                //        "killer-" + ((killer != null) ? (ChatColor.BOLD + "")
+                                //                + killer.getName() : "Unbekannt"),
+                                //        "item-" + ((killer != null) ? ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unbekanntes Item"));
+                                sm.addKill(killer, p, gameID);
                                 pk = new PlayerKilledEvent(p, this, killer, p.getLastDamageCause().getCause());
                             } else {
-                                msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(), "player-"
-                                        + (ChatColor.BOLD + "")
-                                        + p.getName(), "killer-" + p.getLastDamageCause().getEntityType());
+                                msgRawFall(MessageManager.PrefixType.INFO, ChatColor.GREEN + "Spieler " + ChatColor.GOLD + p.getName() + ChatColor.GREEN + " ist durch das Einwirken einer dritten partei (" + p.getLastDamageCause().getEntityType().name() + ") gestorben!");
+                                //  msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(), "player-"
+                                //          + (ChatColor.BOLD + "")
+                                //          + p.getName(), "killer-" + p.getLastDamageCause().getEntityType());
                                 pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
 
                             }
                             break;
                         default:
-                            msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getCause().name(),
-                                    "player-" + (ChatColor.BOLD + "") + p.getName(),
-                                    "killer-" + p.getLastDamageCause().getCause());
+                            // msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getCause().name(),
+                            //         "player-" + (ChatColor.BOLD + "") + p.getName(),
+                            //         "killer-" + p.getLastDamageCause().getCause());
+                            msgRawFall(MessageManager.PrefixType.INFO, ChatColor.GREEN + "Spieler " + ChatColor.GOLD + p.getName() + ChatColor.GREEN + " ist aufgrund von unvorhergesehenen umständen gestorben!");
                             pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
 
                             break;
@@ -976,6 +979,12 @@ public class Game {
     public void msgFall(MessageManager.PrefixType type, String msg, String... vars) {
         for (Player p : getAllPlayers()) {
             msgmgr.sendFMessage(type, msg, p, vars);
+        }
+    }
+
+    public void msgRawFall(MessageManager.PrefixType type, String msg) {
+        for (Player p : getAllPlayers()) {
+            msgmgr.sendMessage(type, msg, p);
         }
     }
 

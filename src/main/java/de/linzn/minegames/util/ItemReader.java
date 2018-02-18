@@ -1,6 +1,7 @@
 package de.linzn.minegames.util;
 
 import de.linzn.minegames.MineGames;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +18,7 @@ public class ItemReader {
 
     private static void loadIds() {
 
-        encids = new HashMap<String, Enchantment>();
+        encids = new HashMap<>();
 
         for (Enchantment e : Enchantment.values()) {
             encids.put(e.toString().toLowerCase().replace("_", ""), e);
@@ -86,13 +87,33 @@ public class ItemReader {
         if (split.length < 1) {
             return null;
         } else if (split.length == 1) {
-            return new ItemStack(Integer.parseInt(split[0]));
+            Material material = Material.matchMaterial(split[0]);
+            if (material == null) {
+                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+            }
+            MineGames.debug("Material: " + material.name());
+            return new ItemStack(material);
         } else if (split.length == 2) {
-            return new ItemStack(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+            Material material = Material.matchMaterial(split[0]);
+            if (material == null) {
+                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+            }
+            MineGames.debug("Material: " + material.name());
+            return new ItemStack(material, Integer.parseInt(split[1]));
         } else if (split.length == 3) {
-            return new ItemStack(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Short.parseShort(split[2]));
+            Material material = Material.matchMaterial(split[0]);
+            if (material == null) {
+                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+            }
+            MineGames.debug("Material: " + material.name());
+            return new ItemStack(material, Integer.parseInt(split[1]), Short.parseShort(split[2]));
         } else {
-            ItemStack i = new ItemStack(Integer.parseInt(split[0]), Integer.parseInt(split[1]), Short.parseShort(split[2]));
+            Material material = Material.matchMaterial(split[0]);
+            if (material == null) {
+                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+            }
+            MineGames.debug("Material: " + material.name());
+            ItemStack i = new ItemStack(material, Integer.parseInt(split[1]), Short.parseShort(split[2]));
             if (!split[3].equalsIgnoreCase("none")) {
                 String encs[] = split[3].toLowerCase().split(" ");
                 for (String enc : encs) {

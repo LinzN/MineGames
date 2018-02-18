@@ -46,7 +46,7 @@ kits:
     cost: 0
     icon: '399'
     contents:
-    - '267,1, 0, sharpness:4, Blade'
+    - 'wooden_sword,1, 0, sharpness:4, Blade'
     - '261'
     - '262, 64'
   kit2:
