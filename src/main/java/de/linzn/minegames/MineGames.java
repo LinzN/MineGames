@@ -146,6 +146,7 @@ public class MineGames extends JavaPlugin {
             pm.registerEvents(new BandageUse(), p);
             pm.registerEvents(new KitEvents(), p);
             pm.registerEvents(new KeepLobbyLoadedEvent(), p);
+            pm.registerEvents(new McMMOPreventer(), p);
 
 
             for (Player p : Bukkit.getOnlinePlayers()) {

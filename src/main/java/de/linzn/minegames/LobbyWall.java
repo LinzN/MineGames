@@ -86,7 +86,7 @@ public class LobbyWall {
 
         //sign 0
         s0.setLine(0, "[MineGames]");
-        s0.setLine(1, "Click to join");
+        s0.setLine(1, "Klicke hier");
         s0.setLine(2, "Arena " + gameid);
 
         //sign 1

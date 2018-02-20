@@ -1,7 +1,6 @@
 package de.linzn.minegames;
 
 
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import de.linzn.mineLib.title.MineTitle;
 import de.linzn.mineProfile.core.PlayerDataAPI;
 import de.linzn.mineProfile.modies.VanishMode;
@@ -13,9 +12,7 @@ import de.linzn.minegames.logging.QueueManager;
 import de.linzn.minegames.stats.StatsManager;
 import de.linzn.minegames.util.ItemReader;
 import de.linzn.minegames.util.Kit;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -419,7 +416,8 @@ public class Game {
             startTime = new Date().getTime();
             for (Player pl : activePlayers) {
                 pl.setHealth(pl.getMaxHealth());
-                new MineTitle("" + ChatColor.YELLOW + ChatColor.BOLD + "Viel Glück!", ChatColor.YELLOW + "Du hast eine Schutzzeit von " + config.getInt("grace-period") + " Sekunden!", 10, 40, 20).send(pl);
+                pl.playSound(pl.getLocation(), Sound.ENTITY_ENDERDRAGON_DEATH, SoundCategory.MASTER, 15, 5);
+                new MineTitle("" + ChatColor.YELLOW + ChatColor.BOLD + "Viel Glück!", ChatColor.YELLOW + "Du hast eine Schutzzeit von " + config.getInt("grace-period") + " Sekunden!", 10, 80, 20).send(pl);
 
             }
             if (config.getBoolean("restock-chest")) {
@@ -432,7 +430,8 @@ public class Game {
             if (config.getInt("grace-period") != 0) {
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GameManager.getInstance().getPlugin(), () -> {
                     for (Player play : activePlayers) {
-                        new MineTitle("" + ChatColor.RED + ChatColor.BOLD + "Schutzzeit Abgelaufen!", ChatColor.YELLOW + "Lass die MineGames beginnen!", 10, 40, 20).send(play);
+                        play.playSound(play.getLocation(), Sound.ENTITY_WITHER_SPAWN, SoundCategory.MASTER, 15, 1);
+                        new MineTitle("" + ChatColor.RED + ChatColor.BOLD + "Schutzzeit Abgelaufen!", ChatColor.YELLOW + "Lass die MineGames beginnen!", 10, 60, 20).send(play);
                     }
                 }, config.getInt("grace-period") * 20);
             }
@@ -475,11 +474,13 @@ public class Game {
                 if (count > 0) {
                     if (count == 20) {
                         for (Player p : activePlayers) {
+                            p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 15, 1);
                             new MineTitle("" + ChatColor.GREEN + ChatColor.BOLD + "Der Countdown beginnt!", "" + ChatColor.GREEN + ChatColor.BOLD + "Bereitet euch vor!", 5, 40, 20).send(p);
                         }
                     }
-                    if (count < 15 && count > 10) {
+                    if (count < 17 && count > 10) {
                         for (Player p : activePlayers) {
+                            p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 15, 1);
                             new MineTitle(ChatColor.GREEN + "Spiel startet in", "" + ChatColor.RED + ChatColor.BOLD + count, 5, 20, 5).send(p);
                         }
                     }
@@ -487,6 +488,7 @@ public class Game {
                     if (count <= 10) {
                         //todo Tittle API
                         for (Player p : activePlayers) {
+                            p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 15, 1);
                             new MineTitle("" + ChatColor.RED + ChatColor.BOLD + count, ChatColor.YELLOW + "Spiel startet in", 5, 20, 5).send(p);
                         }
                         //msgFall(MessageManager.PrefixType.INFO, "game.countdown", "t-" + count);
@@ -580,26 +582,14 @@ public class Game {
                             if (p.getLastDamageCause().getEntityType() == EntityType.PLAYER && p.getKiller() != null) {
                                 Player killer = p.getKiller();
                                 msgRawFall(MessageManager.PrefixType.INFO, ChatColor.GREEN + "Spieler " + ChatColor.GOLD + p.getName() + ChatColor.GREEN + " ist durch die Hand von " + ChatColor.GOLD + killer.getName() + ChatColor.GREEN + " gestorben!");
-                                //msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(),
-                                //        "player-" + ChatColor.BOLD + p.getName(),
-                                //        "killer-" + ((killer != null) ? (ChatColor.BOLD + "")
-                                //                + killer.getName() : "Unbekannt"),
-                                //        "item-" + ((killer != null) ? ItemReader.getFriendlyItemName(killer.getItemInHand().getType()) : "Unbekanntes Item"));
                                 sm.addKill(killer, p, gameID);
                                 pk = new PlayerKilledEvent(p, this, killer, p.getLastDamageCause().getCause());
                             } else {
                                 msgRawFall(MessageManager.PrefixType.INFO, ChatColor.GREEN + "Spieler " + ChatColor.GOLD + p.getName() + ChatColor.GREEN + " ist durch das Einwirken einer dritten partei (" + p.getLastDamageCause().getEntityType().name() + ") gestorben!");
-                                //  msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getEntityType(), "player-"
-                                //          + (ChatColor.BOLD + "")
-                                //          + p.getName(), "killer-" + p.getLastDamageCause().getEntityType());
                                 pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
-
                             }
                             break;
                         default:
-                            // msgFall(MessageManager.PrefixType.INFO, "death." + p.getLastDamageCause().getCause().name(),
-                            //         "player-" + (ChatColor.BOLD + "") + p.getName(),
-                            //         "killer-" + p.getLastDamageCause().getCause());
                             msgRawFall(MessageManager.PrefixType.INFO, ChatColor.GREEN + "Spieler " + ChatColor.GOLD + p.getName() + ChatColor.GREEN + " ist aufgrund von unvorhergesehenen umständen gestorben!");
                             pk = new PlayerKilledEvent(p, this, null, p.getLastDamageCause().getCause());
 
@@ -790,14 +780,12 @@ public class Game {
     }
 
     public void savePlayerData(Player p) {
-        BleedTimerTask.bleedOut(p);
         PlayerDataAPI.unloadProfile(p, true);
         new VanishMode(p, 0, false);
     }
 
     public void loadPlayerData(Player p, boolean onLogout) {
         if (!onLogout) {
-            BleedTimerTask.bleedOut(p);
             PlayerDataAPI.loadProfile(p);
         }
     }
