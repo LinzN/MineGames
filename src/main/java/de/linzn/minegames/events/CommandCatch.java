@@ -27,7 +27,7 @@ public class CommandCatch implements Listener {
         if (!SettingsManager.getInstance().getConfig().getBoolean("disallow-commands")) {
             return;
         }
-        if (command.equalsIgnoreCase("/mg") || command.equalsIgnoreCase("/minegames") || command.equalsIgnoreCase("/sg") || command.equalsIgnoreCase("/hg") || command.equalsIgnoreCase("/hungergames") || command.equalsIgnoreCase("/tell") || command.equalsIgnoreCase("/r") || command.equalsIgnoreCase("/msg") || command.equalsIgnoreCase("/g") || command.equalsIgnoreCase("/gc") || command.equalsIgnoreCase("/h")) {
+        if (command.equalsIgnoreCase("/mg") || command.equalsIgnoreCase("/minegames") || command.equalsIgnoreCase("/sg") || command.equalsIgnoreCase("/hg") || command.equalsIgnoreCase("/hungergames") || command.equalsIgnoreCase("/tell") || command.equalsIgnoreCase("/r") || command.equalsIgnoreCase("/msg") || command.equalsIgnoreCase("/g") || command.equalsIgnoreCase("/tc") || command.equalsIgnoreCase("/gc") || command.equalsIgnoreCase("/h")) {
             return;
         } else if (SettingsManager.getInstance().getConfig().getStringList("cmdwhitelist").contains(command)) {
             return;

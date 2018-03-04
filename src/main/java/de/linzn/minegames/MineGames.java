@@ -75,7 +75,7 @@ public class MineGames extends JavaPlugin {
         for (Game g : GameManager.getInstance().getGames()) {
             try {
                 g.disable();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
             QueueManager.getInstance().rollback(g.getID(), true);
         }
@@ -85,9 +85,8 @@ public class MineGames extends JavaPlugin {
 
     public void onEnable() {
         logger = p.getLogger();
-
-        getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
-
+        startup();
+        //getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
     }
 
     public void setCommands() {
@@ -103,8 +102,8 @@ public class MineGames extends JavaPlugin {
         }
     }
 
-    class Startup implements Runnable {
-        public void run() {
+    public void startup() {
+
             datafolder = p.getDataFolder();
 
             PluginManager pm = getServer().getPluginManager();
@@ -116,7 +115,8 @@ public class MineGames extends JavaPlugin {
 
             try {
                 FileConfiguration c = SettingsManager.getInstance().getConfig();
-                if (c.getBoolean("stats.enabled")) DatabaseManager.getInstance().setup(p);
+                if (c.getBoolean("stats.enabled"))
+                    DatabaseManager.getInstance().setup(p);
                 QueueManager.getInstance().setup();
                 StatsManager.getInstance().setup(p, c.getBoolean("stats.enabled"));
                 dbcon = true;
@@ -147,15 +147,13 @@ public class MineGames extends JavaPlugin {
             pm.registerEvents(new KitEvents(), p);
             pm.registerEvents(new KeepLobbyLoadedEvent(), p);
             pm.registerEvents(new McMMOPreventer(), p);
-
+        pm.registerEvents(new EntityDestroyEvent(), p);
 
             for (Player p : Bukkit.getOnlinePlayers()) {
                 if (GameManager.getInstance().getBlockGameId(p.getLocation()) != -1) {
                     p.teleport(SettingsManager.getInstance().getLobbySpawn());
                 }
             }
-
-            //new Webserver().start();
         }
-    }
 }
+

@@ -29,13 +29,20 @@ public class DatabaseManager {
 
 
     public Connection getMysqlConnection() {
+        try {
+            if (conn == null || !conn.isValid(500)) {
+                connect();
+            }
+        } catch (SQLException e) {
+            connect();
+        }
         return conn;
     }
 
     public boolean connectToDB(String host, int port, String db, String user, String pass) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db, user, pass);
+            conn = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db + "?autoReconnect=true", user, pass);
             return true;
         } catch (ClassNotFoundException e) {
             log.warning("Couldn't start MySQL Driver. Stopping...\n" + e.getMessage());
@@ -52,7 +59,7 @@ public class DatabaseManager {
         PreparedStatement p = null;
         try {
             times++;
-            p = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            p = getMysqlConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e) {
             if (times == 5) {
                 // System.out.println("[MineGames][SQL ERROR] ATTEMPTED TO CONNECT TO DATABASE 5 TIMES AND FAILED! CONNECTION LOST.");
@@ -69,14 +76,14 @@ public class DatabaseManager {
 
     public Statement createStatement() {
         try {
-            return conn.createStatement();
+            return getMysqlConnection().createStatement();
         } catch (SQLException e) {
             return null;
         }
     }
 
 
-    public boolean connect() {
+    public void connect() {
         //log.info("Connecting to database...");
         FileConfiguration c = SettingsManager.getInstance().getConfig();
         String host = c.getString("sql.host", "localhost");
@@ -84,7 +91,7 @@ public class DatabaseManager {
         String db = c.getString("sql.database", "MineGames");
         String user = c.getString("sql.user", "root");
         String pass = c.getString("sql.pass", "");
-        return this.connectToDB(host, port, db, user, pass);
+        this.connectToDB(host, port, db, user, pass);
     }
 
 }

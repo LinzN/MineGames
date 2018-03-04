@@ -3,6 +3,7 @@ package de.linzn.minegames;
 
 import de.linzn.mineLib.title.MineTitle;
 import de.linzn.mineProfile.core.PlayerDataAPI;
+import de.linzn.mineProfile.modies.FlyMode;
 import de.linzn.mineProfile.modies.VanishMode;
 import de.linzn.minegames.api.PlayerJoinArenaEvent;
 import de.linzn.minegames.api.PlayerKilledEvent;
@@ -782,6 +783,7 @@ public class Game {
     public void savePlayerData(Player p) {
         PlayerDataAPI.unloadProfile(p, true);
         new VanishMode(p, 0, false);
+        new FlyMode(p, 0, false);
     }
 
     public void loadPlayerData(Player p, boolean onLogout) {

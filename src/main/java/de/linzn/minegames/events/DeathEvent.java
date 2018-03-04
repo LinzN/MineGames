@@ -45,17 +45,17 @@ public class DeathEvent implements Listener {
             PlayerInventory inv = player.getInventory();
             Location l = player.getLocation();
 
+
             for (ItemStack i : inv.getContents()) {
                 if (i != null)
                     l.getWorld().dropItemNaturally(l, i);
             }
-            for (ItemStack i : inv.getArmorContents()) {
+         /*   for (ItemStack i : inv.getArmorContents()) {
                 if (i != null && i.getTypeId() != 0)
                     l.getWorld().dropItemNaturally(l, i);
-            }
+            } */
 
             GameManager.getInstance().getGame(GameManager.getInstance().getPlayerGameId(player)).killPlayer(player, false, false);
-
 
         }
     }

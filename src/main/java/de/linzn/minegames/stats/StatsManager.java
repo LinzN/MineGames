@@ -157,13 +157,10 @@ public class StatsManager {
 
 
     class DatabaseDumper extends Thread {
-
         public void run() {
             while (queue.size() > 0) {
                 PreparedStatement s = queue.remove(0);
                 try {
-
-
                     s.execute();
                 } catch (Exception e) {
                     dbman.connect();
