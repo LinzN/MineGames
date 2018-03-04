@@ -16,7 +16,9 @@ public class CommandCatch implements Listener {
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().split(" ")[0];
 
-        if (!GameManager.getInstance().isPlayerActive(event.getPlayer()) && !GameManager.getInstance().isPlayerInactive(event.getPlayer()) && !GameManager.getInstance().isSpectator(event.getPlayer()))
+        //if (!GameManager.getInstance().isPlayerActive(event.getPlayer()) && !GameManager.getInstance().isPlayerInactive(event.getPlayer()) && !GameManager.getInstance().isSpectator(event.getPlayer()))
+        //    return;
+        if (!GameManager.getInstance().isPlayerActive(event.getPlayer()) && !GameManager.getInstance().isSpectator(event.getPlayer()))
             return;
         if (command.equalsIgnoreCase("/list")) {
             event.getPlayer().sendMessage(
