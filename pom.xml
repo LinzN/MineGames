@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.linzn</groupId>
     <artifactId>minegames</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.1</version>
     <name>MineGames</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>de.linzn</groupId>
             <artifactId>mineProfile</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
