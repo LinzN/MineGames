@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.linzn</groupId>
     <artifactId>minegames</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0</version>
     <name>MineGames</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,6 +36,11 @@
             <id>spigot-server-repo</id>
             <url>http://maven.elmakers.com/repository/</url>
         </repository>
+        <repository>
+            <id>enigmar-repo</id>
+            <url>https://repository.enigmar.de/</url>
+        </repository>
+
     </repositories>
     <dependencies>
         <dependency>
@@ -80,7 +85,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.12-R0.1-SNAPSHOT</version>
+            <version>1.13-pre7-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
