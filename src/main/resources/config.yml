@@ -137,7 +137,7 @@ deathmatch:
 reward:
  enabled: false
  contents:
-  - 'DIAMOND_SWORD,1, 0, sharpness:4, Blade'
+  - 'DIAMOND_SWORD,1, 0, DAMAGE_ALL:4, Blade'
   
   
 #Settings for connecting to and 

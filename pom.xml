@@ -26,10 +26,6 @@
             <url>https://repo.inventivetalent.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>spigot-server-repo</id>
-            <url>http://maven.elmakers.com/repository/</url>
-        </repository>
-        <repository>
             <id>enigmar-repo</id>
             <url>https://repository.enigmar.de/</url>
         </repository>
