@@ -20,7 +20,7 @@ public class ItemReader {
         encids = new HashMap<>();
 
         for (Enchantment e : Enchantment.values()) {
-            encids.put(e.toString().toLowerCase().replace("_", ""), e);
+            encids.put(e.toString(), e);
         }
 
         //Anything enchants
@@ -80,7 +80,6 @@ public class ItemReader {
         } else if (split.length == 1) {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                // material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
                 material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
@@ -88,7 +87,6 @@ public class ItemReader {
         } else if (split.length == 2) {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                //material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
                 material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
@@ -96,7 +94,6 @@ public class ItemReader {
         } else if (split.length == 3) {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                //material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
                 material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
@@ -104,7 +101,6 @@ public class ItemReader {
         } else {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                //material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
                 material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
@@ -114,7 +110,13 @@ public class ItemReader {
                 for (String enc : encs) {
                     System.out.println(enc);
                     String e[] = enc.split(":");
-                    i.addUnsafeEnchantment(encids.get(e[0]), Integer.parseInt(e[1]));
+                    Enchantment enchantment = encids.get(e[0].toUpperCase());
+                    if (enchantment != null) {
+                        int level = Integer.parseInt(e[1]);
+                        i.addUnsafeEnchantment(enchantment, level);
+                    } else {
+                        MineGames.debug("Enchant is null ?? :: " + e[0].toUpperCase());
+                    }
                 }
             }
             if (split.length == 5) {
