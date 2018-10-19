@@ -52,28 +52,58 @@ clear-chest: false
 block:
   place:
     whitelist:
-    - LEAVES
+    - ACACIA_LEAVES
+    - BIRCH_LEAVES
+    - DARK_OAK_LEAVES
+    - JUNGLE_LEAVES
+    - OAK_LEAVES
+    - SPRUCE_LEAVES
     - MELON_STEM
     - GRASS
-    - TALLGRASS
-    - YELLOW_FLOWER
-    - RED_FLOWER
+    - TALL_GRASS
     - TORCH
-    - MELON_BLOCK
-    - DOUBLE_STONE_SLAB
+    - MELON
+    - STONE_SLAB
     - CAKE
+    - SUNFLOWER
+    - DANDELION
+    - DANDELION_YELLOW
+    - POPPY
+    - BLUE_ORCHID
+    - ALLIUM
+    - AZURE_BLUET
+    - OXEYE_DAISY
+    - ORANGE_TULIP
+    - PINK_TULIP
+    - RED_TULIP
+    - WHITE_TULIP
   break:
     whitelist:
-    - LEAVES
+    - ACACIA_LEAVES
+    - BIRCH_LEAVES
+    - DARK_OAK_LEAVES
+    - JUNGLE_LEAVES
+    - OAK_LEAVES
+    - SPRUCE_LEAVES
     - MELON_STEM
     - GRASS
-    - TALLGRASS
-    - YELLOW_FLOWER
-    - RED_FLOWER
+    - TALL_GRASS
     - TORCH
-    - MELON_BLOCK
-    - DOUBLE_STONE_SLAB
+    - MELON
+    - STONE_SLAB
     - CAKE
+    - SUNFLOWER
+    - DANDELION
+    - DANDELION_YELLOW
+    - POPPY
+    - BLUE_ORCHID
+    - ALLIUM
+    - AZURE_BLUET
+    - OXEYE_DAISY
+    - ORANGE_TULIP
+    - PINK_TULIP
+    - RED_TULIP
+    - WHITE_TULIP
 
 # Which entities will be left in the map after rollback
 entities:
