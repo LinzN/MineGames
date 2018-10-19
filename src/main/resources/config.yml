@@ -52,28 +52,28 @@ clear-chest: false
 block:
   place:
     whitelist:
-    - 18
-    - 105
-    - 31
-    - 37
-    - 38
-    - 50
-    - 103
-    - 43
-    - 354
-    - 92
+    - LEAVES
+    - MELON_STEM
+    - GRASS
+    - TALLGRASS
+    - YELLOW_FLOWER
+    - RED_FLOWER
+    - TORCH
+    - MELON_BLOCK
+    - DOUBLE_STONE_SLAB
+    - CAKE
   break:
     whitelist:
-    - 18
-    - 105
-    - 31
-    - 37
-    - 38
-    - 50
-    - 103
-    - 43
-    - 354
-    - 92
+    - LEAVES
+    - MELON_STEM
+    - GRASS
+    - TALLGRASS
+    - YELLOW_FLOWER
+    - RED_FLOWER
+    - TORCH
+    - MELON_BLOCK
+    - DOUBLE_STONE_SLAB
+    - CAKE
 
 # Which entities will be left in the map after rollback
 entities:
@@ -133,11 +133,11 @@ deathmatch:
 # Items are defined as 
 #    itemnumber, amount, durabilty, enchantments, name
 # Example: diamond sword with 1 item, full durabilty, shaprness 4, knockback 2 and the name killer
-#     276, 1, 0, sharpness: 4 knockback: 2, killer
+#     DIAMOND_SWORD, 1, 0, sharpness: 4 knockback: 2, killer
 reward:
  enabled: false
  contents:
-  - '267,1, 0, sharpness:4, Blade'
+  - 'DIAMOND_SWORD,1, 0, sharpness:4, Blade'
   
   
 #Settings for connecting to and 

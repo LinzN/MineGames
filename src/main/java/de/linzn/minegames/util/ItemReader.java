@@ -1,7 +1,6 @@
 package de.linzn.minegames.util;
 
 import de.linzn.minegames.MineGames;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -25,52 +24,44 @@ public class ItemReader {
         }
 
         //Anything enchants
-        encids.put("unbreaking", Enchantment.DURABILITY);
-        encids.put("mending", Enchantment.MENDING);
+        encids.put("DURABILITY", Enchantment.DURABILITY);
+        encids.put("MENDING", Enchantment.MENDING);
 
         //Armor Enchants
-        encids.put("prot", Enchantment.PROTECTION_ENVIRONMENTAL);
-        encids.put("protection", Enchantment.PROTECTION_ENVIRONMENTAL);
-        encids.put("fireprot", Enchantment.PROTECTION_FIRE);
-        encids.put("fireprotection", Enchantment.PROTECTION_FIRE);
-        encids.put("featherfall", Enchantment.PROTECTION_FALL);
-        encids.put("featherfalling", Enchantment.PROTECTION_FALL);
-        encids.put("blastprot", Enchantment.PROTECTION_EXPLOSIONS);
-        encids.put("blastprotection", Enchantment.PROTECTION_EXPLOSIONS);
-        encids.put("projectileprot", Enchantment.PROTECTION_PROJECTILE);
-        encids.put("projectileprotection", Enchantment.PROTECTION_PROJECTILE);
-        encids.put("aquaaffinity", Enchantment.WATER_WORKER);
-        encids.put("respiration", Enchantment.OXYGEN);
-        encids.put("thorns", Enchantment.THORNS);
-        encids.put("depthstrider", Enchantment.DEPTH_STRIDER);
-        encids.put("frostwalker", Enchantment.FROST_WALKER);
+        encids.put("PROTECTION_ENVIRONMENTAL", Enchantment.PROTECTION_ENVIRONMENTAL);
+        encids.put("PROTECTION_FIRE", Enchantment.PROTECTION_FIRE);
+        encids.put("PROTECTION_FALL", Enchantment.PROTECTION_FALL);
+        encids.put("PROTECTION_EXPLOSIONS", Enchantment.PROTECTION_EXPLOSIONS);
+        encids.put("PROTECTION_PROJECTILE", Enchantment.PROTECTION_PROJECTILE);
+        encids.put("WATER_WORKER", Enchantment.WATER_WORKER);
+        encids.put("OXYGEN", Enchantment.OXYGEN);
+        encids.put("THORNS", Enchantment.THORNS);
+        encids.put("DEPTH_STRIDER", Enchantment.DEPTH_STRIDER);
+        encids.put("FROST_WALKER", Enchantment.FROST_WALKER);
 
         //Weapon Enchants
-        encids.put("knockback", Enchantment.KNOCKBACK);
-        encids.put("smite", Enchantment.DAMAGE_UNDEAD);
-        encids.put("baneofarthropods", Enchantment.DAMAGE_ARTHROPODS);
-        encids.put("sharpness", Enchantment.DAMAGE_ALL);
-        encids.put("dmg", Enchantment.DAMAGE_ALL);
-        encids.put("fire", Enchantment.FIRE_ASPECT);
-        encids.put("looting", Enchantment.LOOT_BONUS_MOBS);
-        encids.put("loot", Enchantment.LOOT_BONUS_MOBS);
-        encids.put("sweepingedge", Enchantment.SWEEPING_EDGE);
+        encids.put("KNOCKBACK", Enchantment.KNOCKBACK);
+        encids.put("DAMAGE_UNDEAD", Enchantment.DAMAGE_UNDEAD);
+        encids.put("DAMAGE_ARTHROPODS", Enchantment.DAMAGE_ARTHROPODS);
+        encids.put("DAMAGE_ALL", Enchantment.DAMAGE_ALL);
+        encids.put("FIRE_ASPECT", Enchantment.FIRE_ASPECT);
+        encids.put("LOOT_BONUS_MOBS", Enchantment.LOOT_BONUS_MOBS);
+        encids.put("SWEEPING_EDGE", Enchantment.SWEEPING_EDGE);
 
         //Tool enchants (Silk Touch's enchantment name is Silk_Touch, so it's covered above)
-        encids.put("silktouch", Enchantment.SILK_TOUCH);
-        encids.put("efficiency", Enchantment.DIG_SPEED);
-        encids.put("fort", Enchantment.LOOT_BONUS_BLOCKS);
-        encids.put("fortune", Enchantment.LOOT_BONUS_BLOCKS);
+        encids.put("SILK_TOUCH", Enchantment.SILK_TOUCH);
+        encids.put("DIG_SPEED", Enchantment.DIG_SPEED);
+        encids.put("LOOT_BONUS_BLOCKS", Enchantment.LOOT_BONUS_BLOCKS);
 
         //Bow specific enchants
-        encids.put("punch", Enchantment.ARROW_KNOCKBACK);
-        encids.put("power", Enchantment.ARROW_DAMAGE);
-        encids.put("infinity", Enchantment.ARROW_INFINITE);
-        encids.put("flame", Enchantment.ARROW_FIRE);
+        encids.put("ARROW_KNOCKBACK", Enchantment.ARROW_KNOCKBACK);
+        encids.put("ARROW_DAMAGE", Enchantment.ARROW_DAMAGE);
+        encids.put("ARROW_INFINITE", Enchantment.ARROW_INFINITE);
+        encids.put("ARROW_FIRE", Enchantment.ARROW_FIRE);
 
         //Fishing Rod specific enchants
-        encids.put("luckofthesea", Enchantment.LUCK);
-        encids.put("lure", Enchantment.LURE);
+        encids.put("LUCK", Enchantment.LUCK);
+        encids.put("LURE", Enchantment.LURE);
     }
 
 
@@ -89,28 +80,32 @@ public class ItemReader {
         } else if (split.length == 1) {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                // material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
             return new ItemStack(material);
         } else if (split.length == 2) {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                //material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
             return new ItemStack(material, Integer.parseInt(split[1]));
         } else if (split.length == 3) {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                //material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
             return new ItemStack(material, Integer.parseInt(split[1]), Short.parseShort(split[2]));
         } else {
             Material material = Material.matchMaterial(split[0]);
             if (material == null) {
-                material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                //material = Bukkit.getUnsafe().getMaterialFromInternalName(split[0]);
+                material = Material.valueOf(split[0]);
             }
             MineGames.debug("Material: " + material.name());
             ItemStack i = new ItemStack(material, Integer.parseInt(split[1]), Short.parseShort(split[2]));

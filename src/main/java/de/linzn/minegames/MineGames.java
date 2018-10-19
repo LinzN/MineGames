@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MineGames extends JavaPlugin {
+    public static MineGames plugin;
     public static Logger logger;
     public static boolean dbcon = false;
     public static boolean config_todate = false;
@@ -84,6 +85,7 @@ public class MineGames extends JavaPlugin {
     }
 
     public void onEnable() {
+        plugin = this;
         logger = p.getLogger();
         startup();
         //getServer().getScheduler().scheduleSyncDelayedTask(this, new Startup(), 10);
@@ -104,55 +106,55 @@ public class MineGames extends JavaPlugin {
 
     public void startup() {
 
-            datafolder = p.getDataFolder();
+        datafolder = p.getDataFolder();
 
-            PluginManager pm = getServer().getPluginManager();
-            setCommands();
+        PluginManager pm = getServer().getPluginManager();
+        setCommands();
 
-            SettingsManager.getInstance().setup(p);
-            MessageManager.getInstance().setup();
-            GameManager.getInstance().setup(p);
+        SettingsManager.getInstance().setup(p);
+        MessageManager.getInstance().setup();
+        GameManager.getInstance().setup(p);
 
-            try {
-                FileConfiguration c = SettingsManager.getInstance().getConfig();
-                if (c.getBoolean("stats.enabled"))
-                    DatabaseManager.getInstance().setup(p);
-                QueueManager.getInstance().setup();
-                StatsManager.getInstance().setup(p, c.getBoolean("stats.enabled"));
-                dbcon = true;
-            } catch (Exception e) {
-                dbcon = false;
-                e.printStackTrace();
-                logger.severe("!!!Failed to connect to the database. Please check the settings and try again!!!");
-                return;
-            } finally {
-                LobbyManager.getInstance().setup(p);
-            }
+        try {
+            FileConfiguration c = SettingsManager.getInstance().getConfig();
+            if (c.getBoolean("stats.enabled"))
+                DatabaseManager.getInstance().setup(p);
+            QueueManager.getInstance().setup();
+            StatsManager.getInstance().setup(p, c.getBoolean("stats.enabled"));
+            dbcon = true;
+        } catch (Exception e) {
+            dbcon = false;
+            e.printStackTrace();
+            logger.severe("!!!Failed to connect to the database. Please check the settings and try again!!!");
+            return;
+        } finally {
+            LobbyManager.getInstance().setup(p);
+        }
 
-            ChestRatioStorage.getInstance().setup();
-            HookManager.getInstance().setup();
-            pm.registerEvents(new PlaceEvent(), p);
-            pm.registerEvents(new BreakEvent(), p);
-            pm.registerEvents(new DeathEvent(), p);
-            pm.registerEvents(new MoveEvent(), p);
-            pm.registerEvents(new CommandCatch(), p);
-            pm.registerEvents(new SignClickEvent(), p);
-            pm.registerEvents(new ChestReplaceEvent(), p);
-            pm.registerEvents(new LogoutEvent(), p);
-            pm.registerEvents(new JoinEvent(p), p);
-            pm.registerEvents(new TeleportEvent(), p);
-            pm.registerEvents(LoggingManager.getInstance(), p);
-            pm.registerEvents(new SpectatorEvents(), p);
-            pm.registerEvents(new BandageUse(), p);
-            pm.registerEvents(new KitEvents(), p);
-            pm.registerEvents(new KeepLobbyLoadedEvent(), p);
-            pm.registerEvents(new McMMOPreventer(), p);
+        ChestRatioStorage.getInstance().setup();
+        HookManager.getInstance().setup();
+        pm.registerEvents(new PlaceEvent(), p);
+        pm.registerEvents(new BreakEvent(), p);
+        pm.registerEvents(new DeathEvent(), p);
+        pm.registerEvents(new MoveEvent(), p);
+        pm.registerEvents(new CommandCatch(), p);
+        pm.registerEvents(new SignClickEvent(), p);
+        pm.registerEvents(new ChestReplaceEvent(), p);
+        pm.registerEvents(new LogoutEvent(), p);
+        pm.registerEvents(new JoinEvent(p), p);
+        pm.registerEvents(new TeleportEvent(), p);
+        pm.registerEvents(LoggingManager.getInstance(), p);
+        pm.registerEvents(new SpectatorEvents(), p);
+        pm.registerEvents(new BandageUse(), p);
+        pm.registerEvents(new KitEvents(), p);
+        pm.registerEvents(new KeepLobbyLoadedEvent(), p);
+        pm.registerEvents(new McMMOPreventer(), p);
 
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (GameManager.getInstance().getBlockGameId(p.getLocation()) != -1) {
-                    p.teleport(SettingsManager.getInstance().getLobbySpawn());
-                }
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (GameManager.getInstance().getBlockGameId(p.getLocation()) != -1) {
+                p.teleport(SettingsManager.getInstance().getLobbySpawn());
             }
         }
+    }
 }
 

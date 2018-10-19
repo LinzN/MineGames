@@ -66,7 +66,7 @@ chest:
   lvl4:
   - 'iron_sword,1'
   lvl5:
-  - 'diamond_sword,1,0,sharpness:5 knockback:2,Der MineGamer'
+  - 'diamond_sword,1,0,DAMAGE_ALL:5 KNOCKBACK:2,Der MineGamer'
   - 'diamond_helmet,1'
   - 'diamond_chestplate,1'
   - 'diamond_leggings,1'

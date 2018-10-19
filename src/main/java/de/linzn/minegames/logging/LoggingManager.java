@@ -3,6 +3,7 @@ package de.linzn.minegames.logging;
 
 import de.linzn.minegames.Game;
 import de.linzn.minegames.GameManager;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -210,10 +211,10 @@ public class LoggingManager implements Listener {
                 new BlockData(
                         GameManager.getInstance().getBlockGameId(b.getLocation()),
                         b.getWorld().getName(),
-                        0,
-                        (byte) 0,
-                        b.getTypeId(),
-                        b.getData(),
+                        Material.AIR,
+                        null,
+                        b.getType(),
+                        b.getBlockData(),
                         b.getX(),
                         b.getY(),
                         b.getZ(),
@@ -228,16 +229,16 @@ public class LoggingManager implements Listener {
             return;
         if (GameManager.getInstance().getGameMode(GameManager.getInstance().getBlockGameId(b.getLocation())) == Game.GameMode.DISABLED)
             return;
-        if (b.getTypeId() == 51)
+        if (b.getType() == Material.FIRE)
             return;
         QueueManager.getInstance().add(
                 new BlockData(
                         GameManager.getInstance().getBlockGameId(b.getLocation()),
                         b.getWorld().getName(),
-                        b.getTypeId(),
-                        b.getData(),
-                        0,
-                        (byte) 0,
+                        b.getType(),
+                        b.getBlockData(),
+                        Material.AIR,
+                        null,
                         b.getX(),
                         b.getY(),
                         b.getZ(),

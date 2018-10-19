@@ -1,7 +1,10 @@
 package de.linzn.minegames;
 
+import com.sk89q.worldedit.IncompleteRegionException;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.bukkit.selections.Selection;
+import com.sk89q.worldedit.regions.Region;
 import de.linzn.minegames.stats.StatsManager;
 import de.linzn.minegames.util.Kit;
 import org.bukkit.ChatColor;
@@ -262,14 +265,18 @@ public class GameManager {
         FileConfiguration c = SettingsManager.getInstance().getSystemConfig();
         //SettingsManager s = SettingsManager.getInstance();
 
-        WorldEditPlugin we = p.getWorldEdit();
-        Selection sel = we.getSelection(pl);
+        Region sel = null;
+        try {
+            sel = GameManager.getInstance().getWorldEdit().getSession(pl).getSelection(new BukkitWorld(pl.getWorld()));
+        } catch (IncompleteRegionException e) {
+            e.printStackTrace();
+        }
         if (sel == null) {
             msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You must make a WorldEdit Selection first!", pl);
             return;
         }
-        Location max = sel.getMaximumPoint();
-        Location min = sel.getMinimumPoint();
+        Vector max = sel.getMaximumPoint();
+        Vector min = sel.getMinimumPoint();
 
 		/* if(max.getWorld()!=SettingsManager.getGameWorld() || min.getWorld()!=SettingsManager.getGameWorld()){
             pl.sendMessage(ChatColor.RED+"Wrong World!");
@@ -282,7 +289,7 @@ public class GameManager {
             no = 1;
         } else no = games.get(games.size() - 1).getID() + 1;
         SettingsManager.getInstance().getSpawns().set(("spawns." + no), null);
-        c.set("sg-system.arenas." + no + ".world", max.getWorld().getName());
+        c.set("sg-system.arenas." + no + ".world", pl.getWorld().getName());
         c.set("sg-system.arenas." + no + ".x1", max.getBlockX());
         c.set("sg-system.arenas." + no + ".y1", max.getBlockY());
         c.set("sg-system.arenas." + no + ".z1", max.getBlockZ());

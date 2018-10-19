@@ -1,8 +1,9 @@
 package de.linzn.minegames;
 
+import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.Vector;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
-import com.sk89q.worldedit.bukkit.selections.Selection;
+import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.regions.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -138,18 +139,23 @@ public class LobbyManager {
             c.set("sg-system.lobby.sign.set", true);
             s.saveSystemConfig();
         }
-        WorldEditPlugin we = GameManager.getInstance().getWorldEdit();
-        Selection sel = we.getSelection(pl);
+        Region sel = null;
+        try {
+            sel = GameManager.getInstance().getWorldEdit().getSession(pl).getSelection(new BukkitWorld(pl.getWorld()));
+        } catch (IncompleteRegionException e) {
+            e.printStackTrace();
+        }
+
         if (sel == null) {
             pl.sendMessage(ChatColor.RED + "You must make a WorldEdit Selection first");
             return;
         }
-        if ((sel.getNativeMaximumPoint().getBlockX() - sel.getNativeMinimumPoint().getBlockX()) != 0 && (sel.getNativeMinimumPoint().getBlockZ() - sel.getNativeMaximumPoint().getBlockZ() != 0)) {
+        if ((sel.getMaximumPoint().getBlockX() - sel.getMinimumPoint().getBlockX()) != 0 && (sel.getMinimumPoint().getBlockZ() - sel.getMaximumPoint().getBlockZ() != 0)) {
             pl.sendMessage(ChatColor.RED + " Must be in a straight line!");
             return;
         }
-        Vector max = sel.getNativeMaximumPoint();
-        Vector min = sel.getNativeMinimumPoint();
+        Vector max = sel.getMaximumPoint();
+        Vector min = sel.getMinimumPoint();
         int i = c.getInt("sg-system.lobby.signno", 0) + 1;
         c.set("sg-system.lobby.signno", i);
         c.set("sg-system.lobby.signs." + i + ".id", a);

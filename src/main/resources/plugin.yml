@@ -4,6 +4,7 @@ version: ${project.version}
 description: MineGaming Survival Games
 author: Niklas Linz
 depend: [WorldEdit, Vault]
+api-version: 1.13
 
 commands:
   minegames:

@@ -3,7 +3,9 @@ package de.linzn.minegames.events;
 
 import de.linzn.minegames.Game;
 import de.linzn.minegames.GameManager;
+import de.linzn.minegames.MineGames;
 import de.linzn.minegames.SettingsManager;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,14 +13,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlaceEvent implements Listener {
 
-    public ArrayList<Integer> allowedPlace = new ArrayList<Integer>();
+    public ArrayList<Material> allowedPlace = new ArrayList<>();
 
     public PlaceEvent() {
-        allowedPlace.addAll(SettingsManager.getInstance().getConfig().getIntegerList("block.place.whitelist"));
+        List<String> list = SettingsManager.getInstance().getConfig().getStringList("block.place.whitelist");
+        for (String item : list) {
+            Material material = Material.getMaterial(item);
+            if (material != null) {
+                allowedPlace.add(material);
+            } else {
+                MineGames.error("Invalid material type: " + item + " for type block.place.whitelist");
+            }
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -51,7 +62,7 @@ public class PlaceEvent implements Listener {
 
         }
 
-        if (!allowedPlace.contains(event.getBlock().getTypeId())) {
+        if (!allowedPlace.contains(event.getBlock().getType())) {
             event.setCancelled(true);
         }
 

@@ -20,7 +20,7 @@
 # Items are defined as 
 #    itemnumber, amount, durabilty, enchantments, name
 # Example: diamond sword with 1 item, full durabilty, shaprness 4, knockback 2 and the name killer
-#     276, 1, 0, sharpness: 4 knockback: 2, killer
+#     diamond_sword, 1, 0, sharpness: 4 knockback: 2, killer
 #
 
 #DONT TOUCH THIS
@@ -44,16 +44,16 @@ kit-select-mode: 'SHOW_ALL'
 kits:
   test-kit:
     cost: 0
-    icon: '399'
+    icon: 'nether_star'
     contents:
-    - 'wooden_sword,1, 0, sharpness:4, Blade'
-    - '261'
-    - '262, 64'
+    - 'wooden_sword,1, 0, DAMAGE_ALL:4, Blade'
+    - 'bow'
+    - 'arrow, 64'
   kit2:
     cost: 0
-    icon: '339'
+    icon: 'paper'
     contents:
-    - '276,1, 0, fire:2, Fire'
-    - '261'
-    - '262, 64'
+    - 'diamond_sword,1, 0, FIRE_ASPECT:2, Fire'
+    - 'bow'
+    - 'arrow, 64'
     

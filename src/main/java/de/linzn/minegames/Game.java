@@ -384,7 +384,7 @@ public class Game {
         if ((((vote + 0.0) / (getActivePlayers() + 0.0)) >= (config.getInt("auto-start-vote") + 0.0) / 100) && getActivePlayers() > 1) {
             countdown(config.getInt("auto-start-time"));
             // for (Player p : activePlayers) {
-                //p.sendMessage(ChatColor.LIGHT_PURPLE + "Game Starting in " + c.getInt("auto-start-time"));
+            //p.sendMessage(ChatColor.LIGHT_PURPLE + "Game Starting in " + c.getInt("auto-start-time"));
             // msgmgr.sendMessage(MessageManager.PrefixType.INFO, "Spiel startet in " + config.getInt("auto-start-time") + "!", p);
             //}
         }
@@ -417,7 +417,7 @@ public class Game {
             startTime = new Date().getTime();
             for (Player pl : activePlayers) {
                 pl.setHealth(pl.getMaxHealth());
-                pl.playSound(pl.getLocation(), Sound.ENTITY_ENDERDRAGON_DEATH, SoundCategory.MASTER, 15, 5);
+                pl.playSound(pl.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, SoundCategory.MASTER, 15, 5);
                 new MineTitle("" + ChatColor.YELLOW + ChatColor.BOLD + "Viel Glück!", ChatColor.YELLOW + "Du hast eine Schutzzeit von " + config.getInt("grace-period") + " Sekunden!", 10, 80, 20).send(pl);
 
             }

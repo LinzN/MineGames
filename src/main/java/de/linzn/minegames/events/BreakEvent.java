@@ -2,7 +2,9 @@ package de.linzn.minegames.events;
 
 import de.linzn.minegames.Game;
 import de.linzn.minegames.GameManager;
+import de.linzn.minegames.MineGames;
 import de.linzn.minegames.SettingsManager;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,14 +12,23 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class BreakEvent implements Listener {
 
-    public ArrayList<Integer> allowedBreak = new ArrayList<Integer>();
+    public ArrayList<Material> allowedBreak = new ArrayList<>();
 
     public BreakEvent() {
-        allowedBreak.addAll(SettingsManager.getInstance().getConfig().getIntegerList("block.break.whitelist"));
+        List<String> list = SettingsManager.getInstance().getConfig().getStringList("block.break.whitelist");
+        for (String item : list) {
+            Material material = Material.getMaterial(item);
+            if (material != null) {
+                allowedBreak.add(material);
+            } else {
+                MineGames.error("Invalid material type: " + item + " for type block.break.whitelist");
+            }
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -49,6 +60,6 @@ public class BreakEvent implements Listener {
             return;
         }
 
-        if (!allowedBreak.contains(event.getBlock().getTypeId())) event.setCancelled(true);
+        if (!allowedBreak.contains(event.getBlock().getType())) event.setCancelled(true);
     }
 }

@@ -1,5 +1,6 @@
 package de.linzn.minegames.logging;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.Serializable;
@@ -11,26 +12,26 @@ public class BlockData implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     private String world;
-    private int previd;
-    private int newid;
-    private byte prevdata, newdata;
+    private Material prevType;
+    private Material newType;
+    private org.bukkit.block.data.BlockData prevdata, newdata;
     private int x, y, z;
     private int gameid;
     private ItemStack[] items;
 
     /**
-     * @param previd
-     * @param newid
+     * @param prevType
+     * @param newType
      * @param x
      * @param y
-     * @param z      Provides a object for holding the data for block changes
+     * @param z        Provides a object for holding the data for block changes
      */
-    public BlockData(int gameid, String world, int previd, byte prevdata, int newid, byte newdata, int x, int y, int z, ItemStack[] items) {
+    public BlockData(int gameid, String world, Material prevType, org.bukkit.block.data.BlockData prevdata, Material newType, org.bukkit.block.data.BlockData newdata, int x, int y, int z, ItemStack[] items) {
         this.gameid = gameid;
         this.world = world;
-        this.previd = previd;
+        this.prevType = prevType;
         this.prevdata = prevdata;
-        this.newid = newid;
+        this.newType = newType;
         this.newdata = newdata;
         this.x = x;
         this.y = y;
@@ -46,20 +47,20 @@ public class BlockData implements Serializable {
         return world;
     }
 
-    public byte getPrevdata() {
+    public org.bukkit.block.data.BlockData getPrevdata() {
         return prevdata;
     }
 
-    public byte getNewdata() {
+    public org.bukkit.block.data.BlockData getNewdata() {
         return newdata;
     }
 
-    public int getPrevid() {
-        return previd;
+    public Material getPrevType() {
+        return prevType;
     }
 
-    public int getNewid() {
-        return newid;
+    public Material getNewType() {
+        return newType;
     }
 
     public int getX() {

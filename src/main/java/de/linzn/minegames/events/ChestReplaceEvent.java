@@ -56,7 +56,7 @@ public class ChestReplaceEvent implements Listener {
                             int level = 1; // default level is 1
                             // if first item in chest is wool, use colour code + 1 for the level
                             ItemStack item = invs[0].getItem(0);
-                            if ((item != null && item.getType() == Material.WOOL)) {
+                            if ((item != null && item.getType() == Material.WHITE_WOOL)) {
                                 level = item.getData().getData() + 1;
                                 MineGames.debug("Setting level to " + level);
                                 invs[0].removeItem(item);
