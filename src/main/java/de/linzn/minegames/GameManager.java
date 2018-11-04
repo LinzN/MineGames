@@ -1,9 +1,9 @@
 package de.linzn.minegames;
 
 import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import de.linzn.minegames.stats.StatsManager;
 import de.linzn.minegames.util.Kit;
@@ -275,8 +275,8 @@ public class GameManager {
             msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "You must make a WorldEdit Selection first!", pl);
             return;
         }
-        Vector max = sel.getMaximumPoint();
-        Vector min = sel.getMinimumPoint();
+        BlockVector3 max = sel.getMaximumPoint();
+        BlockVector3 min = sel.getMinimumPoint();
 
 		/* if(max.getWorld()!=SettingsManager.getGameWorld() || min.getWorld()!=SettingsManager.getGameWorld()){
             pl.sendMessage(ChatColor.RED+"Wrong World!");

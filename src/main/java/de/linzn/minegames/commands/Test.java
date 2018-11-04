@@ -1,8 +1,8 @@
 package de.linzn.minegames.commands;
 
 import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import de.linzn.minegames.GameManager;
 import org.bukkit.Location;
@@ -22,8 +22,8 @@ public class Test implements SubCommand {
             e.printStackTrace();
         }
 
-        Vector max = sel.getMaximumPoint();
-        Vector min = sel.getMinimumPoint();
+        BlockVector3 max = sel.getMaximumPoint();
+        BlockVector3 min = sel.getMinimumPoint();
 
         World w = player.getWorld();
 

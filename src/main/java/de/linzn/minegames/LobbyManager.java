@@ -1,8 +1,8 @@
 package de.linzn.minegames;
 
 import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -154,8 +154,8 @@ public class LobbyManager {
             pl.sendMessage(ChatColor.RED + " Must be in a straight line!");
             return;
         }
-        Vector max = sel.getMaximumPoint();
-        Vector min = sel.getMinimumPoint();
+        BlockVector3 max = sel.getMaximumPoint();
+        BlockVector3 min = sel.getMinimumPoint();
         int i = c.getInt("sg-system.lobby.signno", 0) + 1;
         c.set("sg-system.lobby.signno", i);
         c.set("sg-system.lobby.signs." + i + ".id", a);

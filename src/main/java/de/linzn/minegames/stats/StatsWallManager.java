@@ -1,8 +1,8 @@
 package de.linzn.minegames.stats;
 
 import com.sk89q.worldedit.IncompleteRegionException;
-import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.Region;
 import de.linzn.minegames.GameManager;
 import de.linzn.minegames.MineGames;
@@ -140,8 +140,8 @@ public class StatsWallManager {
             return;
         }
 
-        Vector max = sel.getMaximumPoint();
-        Vector min = sel.getMinimumPoint();
+        BlockVector3 max = sel.getMaximumPoint();
+        BlockVector3 min = sel.getMinimumPoint();
 
         c.set("sg-system.stats.sign.world", pl.getWorld().getName());
         c.set("sg-system.stats.sign.x1", max.getBlockX());
