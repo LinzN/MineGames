@@ -88,7 +88,7 @@ public class QueueManager {
     public void add(BlockData data) {
         ArrayList<BlockData> dat = queue.get(data.getGameId());
         if (dat == null) {
-            dat = new ArrayList<BlockData>();
+            dat = new ArrayList<>();
             ensureFile(data.getGameId());
         }
         dat.add(data);
@@ -116,7 +116,7 @@ public class QueueManager {
 
             ArrayList<BlockData> data = queue.get(id);
             if (data == null) {
-                data = new ArrayList<BlockData>();
+                data = new ArrayList<>();
             }
 
             for (BlockData d : input) {
@@ -251,7 +251,7 @@ public class QueueManager {
                 int a = data.size() - 1;
                 int rb = 0;
                 long t1 = new Date().getTime();
-                int pt = SettingsManager.getInstance().getConfig().getInt("rollback.per-tick", 100);
+                int pt = SettingsManager.getInstance().getConfig().getInt("rollback.per-tick", 20);
                 while (a >= 0 && (rb < pt || shutdown)) {
                     // MineGames.debug("Reseting "+a); // this makes a lot of noise in the logs
                     BlockData result = data.get(a);
