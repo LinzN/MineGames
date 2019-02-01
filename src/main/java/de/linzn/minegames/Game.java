@@ -51,7 +51,7 @@ public class Game {
     private FileConfiguration system;
     private HashMap<Integer, Player> spawns = new HashMap<Integer, Player>();
     private int spawnCount = 0;
-    private int vote = 0;
+
     private boolean disabled = false;
     private int endgameTaskID = 0;
     private boolean endgameRunning = false;
@@ -371,7 +371,6 @@ public class Game {
             msgmgr.sendMessage(MessageManager.PrefixType.WARNING, "Du hast bereits gevotet!", pl);
             return;
         }
-        vote++;
         voted.add(pl);
         for (Player p : activePlayers) {
             msgmgr.sendFMessage(MessageManager.PrefixType.INFO, "game.playervote", p, "player-" + pl.getName());
@@ -381,7 +380,7 @@ public class Game {
             p.sendMessage(ChatColor.AQUA+pl.getName()+" Voted to start the game! "+ Math.round((vote +0.0) / ((getActivePlayers() +0.0)*100)) +"/"+((c.getInt("auto-start-vote")+0.0))+"%");
         }*/
         // Bukkit.getServer().broadcastPrefixType((vote +0.0) / (getActivePlayers() +0.0) +"% voted, needs "+(c.getInt("auto-start-vote")+0.0)/100);
-        if ((((vote + 0.0) / (getActivePlayers() + 0.0)) >= (config.getInt("auto-start-vote") + 0.0) / 100) && getActivePlayers() > 1) {
+        if ((((this.voted.size() + 0.0) / (getActivePlayers() + 0.0)) >= (config.getInt("auto-start-vote") + 0.0) / 100) && getActivePlayers() > 1) {
             countdown(config.getInt("auto-start-time"));
             // for (Player p : activePlayers) {
             //p.sendMessage(ChatColor.LIGHT_PURPLE + "Game Starting in " + c.getInt("auto-start-time"));
@@ -522,7 +521,6 @@ public class Game {
         } else {
             if (this.voted.contains(p)) {
                 this.voted.remove(p);
-                vote--;
             }
             sm.removePlayer(p, gameID);
             //	if (!b) p.teleport(SettingsManager.getInstance().getLobbySpawn());
@@ -771,7 +769,6 @@ public class Game {
         }
 
         tasks.clear();
-        vote = 0;
         voted.clear();
 
         mode = GameMode.RESETING;
