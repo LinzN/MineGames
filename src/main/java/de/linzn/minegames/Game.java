@@ -472,6 +472,13 @@ public class Game {
         if (mode == GameMode.WAITING || mode == GameMode.STARTING) {
             mode = GameMode.STARTING;
             tid = Bukkit.getScheduler().scheduleSyncRepeatingTask(GameManager.getInstance().getPlugin(), () -> {
+                if (getActivePlayers() < 2) {
+                    Bukkit.getScheduler().cancelTask(tid);
+                    countdownRunning = false;
+                    mode = GameMode.WAITING;
+                    return;
+                }
+
                 if (count > 0) {
                     if (count == 20) {
                         for (Player p : activePlayers) {
@@ -513,6 +520,10 @@ public class Game {
         if (mode == GameMode.INGAME) {
             killPlayer(p, b, onLeave);
         } else {
+            if (this.voted.contains(p)) {
+                this.voted.remove(p);
+                vote--;
+            }
             sm.removePlayer(p, gameID);
             //	if (!b) p.teleport(SettingsManager.getInstance().getLobbySpawn());
             //restoreInv(p);
