@@ -1,11 +1,9 @@
 package de.linzn.minegames.stats;
 
-import de.linzn.minegames.Game;
-import de.linzn.minegames.GameManager;
-import de.linzn.minegames.MessageManager;
+import de.linzn.minegames.*;
 import de.linzn.minegames.MessageManager.PrefixType;
-import de.linzn.minegames.SettingsManager;
 import de.linzn.minegames.util.DatabaseManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -24,8 +22,7 @@ public class StatsManager {
     private static StatsManager instance = new StatsManager();
     MessageManager msgmgr;
     private ArrayList<PreparedStatement> queue = new ArrayList<PreparedStatement>();
-    private DatabaseDumper dumper = new DatabaseDumper();
-
+    private DatabaseDumper dumper;
     //private HashMap<Player, PlayerStatsSession>pstats = new HashMap<Player, PlayerStatsSession>();
     private DatabaseManager dbman = DatabaseManager.getInstance();
     private HashMap<Integer, HashMap<Player, PlayerStatsSession>> arenas = new HashMap<Integer, HashMap<Player, PlayerStatsSession>>();
@@ -33,7 +30,6 @@ public class StatsManager {
 
     private StatsManager() {
         msgmgr = MessageManager.getInstance();
-        ;
     }
 
     public static StatsManager getInstance() {
@@ -110,11 +106,11 @@ public class StatsManager {
         }
     }
 
-    public void saveGame(int arenaid, Player winner, int players, long time) {
+    public void saveGame(final int arenaid, final Player winner, final int players, final long time) {
+
         if (!enabled) return;
         int gameno = 0;
         Game g = GameManager.getInstance().getGame(arenaid);
-
         try {
             long time1 = new Date().getTime();
             PreparedStatement s2 = dbman.createStatement("SELECT * FROM " + SettingsManager.getSqlPrefix() +
@@ -126,7 +122,6 @@ public class StatsManager {
             if (time1 + 5000 < new Date().getTime())
                 System.out.println("Your database took a long time to respond. Check the connection between the server and database");
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             g.setRBStatus("Error: getno");
         }
@@ -138,8 +133,6 @@ public class StatsManager {
             addSQL(s.createQuery());
         }
         arenas.get(arenaid).clear();
-
-
     }
 
 
@@ -148,11 +141,13 @@ public class StatsManager {
     }
 
     private void addSQL(PreparedStatement s) {
-        queue.add(s);
-        if (!dumper.isAlive()) {
-            dumper = new DatabaseDumper();
-            dumper.start();
-        }
+        Bukkit.getServer().getScheduler().runTaskAsynchronously(MineGames.plugin, () -> {
+            queue.add(s);
+            if (dumper == null || !dumper.isAlive()) {
+                dumper = new DatabaseDumper();
+                dumper.start();
+            }
+        });
     }
 
 
