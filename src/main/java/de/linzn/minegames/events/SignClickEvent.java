@@ -21,7 +21,7 @@ public class SignClickEvent implements Listener {
 
 
         Block clickedBlock = e.getClickedBlock();
-        if (!(clickedBlock.getType() == Material.SIGN || clickedBlock.getType() == Material.WALL_SIGN))
+        if (!(clickedBlock.getType() == Material.LEGACY_SIGN || clickedBlock.getType() == Material.LEGACY_WALL_SIGN))
             return;
         Sign thisSign = (Sign) clickedBlock.getState();
         //System.out.println("Clicked sign");

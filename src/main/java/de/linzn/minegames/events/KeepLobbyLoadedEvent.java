@@ -10,9 +10,8 @@ public class KeepLobbyLoadedEvent implements Listener {
 
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent e) {
-        LobbyManager.getInstance();
         if (LobbyManager.lobbychunks.contains(e.getChunk())) {
-            e.setCancelled(true);
+            //e.setCancelled(true); //todo check this
         }
         //System.out.println("Chunk unloading");
     }
